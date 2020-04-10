@@ -161,6 +161,81 @@
 				}
 		}
 		
+		/**
+		 * Add/Edit HAZARD ACTIVITY
+		 * @since 5/2/2017
+		 */
+		public function saveHazardActivity() 
+		{
+				$idHazardActivity = $this->input->post('hddId');
+				
+				$data = array(
+					'hazard_activity' => $this->input->post('hazardActivity')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idHazardActivity == '') {
+					$query = $this->db->insert('param_hazard_activity', $data);
+					$idHazardActivity = $this->db->insert_id();				
+				} else {
+					$this->db->where('id_hazard_activity', $idHazardActivity);
+					$query = $this->db->update('param_hazard_activity', $data);
+				}
+				if ($query) {
+					return $idHazardActivity;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Get hazard list
+		 * @since 5/2/2017
+		 */
+		public function get_hazard_list() 
+		{		
+				$this->db->select();
+				$this->db->join('param_hazard_activity A', 'A.id_hazard_activity = H.fk_id_hazard_activity', 'INNER');
+				$this->db->join('param_hazard_priority P', 'P.id_priority = H.fk_id_priority', 'INNER');
+				$this->db->order_by('A.hazard_activity, H.hazard_description', 'asc');
+				$query = $this->db->get('param_hazard H');
+
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Add/Edit HAZARD
+		 * @since 11/12/2016
+		 */
+		public function saveHazard() 
+		{
+				$idHazard = $this->input->post('hddId');
+				
+				$data = array(
+					'fk_id_hazard_activity' => $this->input->post('activity'),
+					'hazard_description' => $this->input->post('hazardName'),
+					'solution' => $this->input->post('solution'),
+					'fk_id_priority' => $this->input->post('priority')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idHazard == '') {
+					$query = $this->db->insert('param_hazard', $data);
+					$idHazard = $this->db->insert_id();				
+				} else {
+					$this->db->where('id_hazard', $idHazard);
+					$query = $this->db->update('param_hazard', $data);
+				}
+				if ($query) {
+					return $idHazard;
+				} else {
+					return false;
+				}
+		}
 		
 		
 	    

@@ -339,6 +339,168 @@ class Settings extends CI_Controller {
 			echo json_encode($data);
     }
 	
+	/**
+	 * Hazard Activity List
+     * @since 5/2/2017
+     * @author BMOTTAG
+	 */
+	public function hazardActivity()
+	{
+			$this->load->model("general_model");
+			$arrParam = array(
+				"table" => "param_hazard_activity",
+				"order" => "hazard_activity",
+				"id" => "x"
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'hazard_activity';
+			$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario hazard Activity
+     * @since 5/2/2017
+     */
+    public function cargarModalHazardActivity() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idHazardActivity"] = $this->input->post("idHazardActivity");	
+			
+			if ($data["idHazardActivity"] != 'x') {
+				$this->load->model("general_model");
+				$arrParam = array(
+					"table" => "param_hazard_activity",
+					"order" => "id_hazard_activity",
+					"column" => "id_hazard_activity",
+					"id" => $data["idHazardActivity"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("hazard_activity_modal", $data);
+    }
+	
+	/**
+	 * Update Hazard Activity
+     * @since 5/2/2017
+     * @author BMOTTAG
+	 */
+	public function save_hazard_activity()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idHazardActivity = $this->input->post('hddId');
+			
+			$msj = "You have add a new Activity!!";
+			if ($idHazardActivity != '') {
+				$msj = "You have update an Activity!!";
+			}
+
+			if ($idHazardActivity = $this->settings_model->saveHazardActivity()) {
+				$data["result"] = true;
+				$data["idRecord"] = $idHazardActivity;
+				
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$data["idRecord"] = "";
+				
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
+    }
+	
+	/**
+	 * hazard List
+     * @since 15/12/2016
+     * @author BMOTTAG
+	 */
+	public function hazard()
+	{
+			$data['info'] = $this->settings_model->get_hazard_list();
+
+			$data["view"] = 'hazard';
+			$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario hazard
+     * @since 15/12/2016
+     */
+    public function cargarModalHazard() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idHazard"] = $this->input->post("idHazard");	
+			
+			$this->load->model("general_model");
+			$arrParam = array(
+				"table" => "param_hazard_activity",
+				"order" => "hazard_activity",
+				"id" => "x"
+			);
+			$data['activityList'] = $this->general_model->get_basic_search($arrParam);
+			
+			$arrParam = array(
+				"table" => "param_hazard_priority",
+				"order" => "priority_description",
+				"id" => "x"
+			);
+			$data['priorityList'] = $this->general_model->get_basic_search($arrParam);
+			
+			if ($data["idHazard"] != 'x') {
+				$arrParam = array(
+					"table" => "param_hazard",
+					"order" => "id_hazard",
+					"column" => "id_hazard",
+					"id" => $data["idHazard"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("hazard_modal", $data);
+    }
+	
+	/**
+	 * Update hazard
+     * @since 15/12/2016
+     * @author BMOTTAG
+	 */
+	public function save_hazard()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idHazard = $this->input->post('hddId');
+			
+			$msj = "You have add a new hazard!!";
+			if ($idHazard != '') {
+				$msj = "You have update a hazard!!";
+			}
+
+			if ($idHazard = $this->settings_model->saveHazard()) {
+				$data["result"] = true;
+				$data["mensaje"] = "Solicitud guardada correctamente.";
+				$data["idRecord"] = $idHazard;
+				
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$data["mensaje"] = "Error al guardar. Intente nuevamente o actualice la p\u00e1gina.";
+				$data["idRecord"] = "";
+				
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
+    }
+	
 
 	
 }
