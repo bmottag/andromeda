@@ -134,6 +134,33 @@
 				}
 		}
 		
+		/**
+		 * Add/Edit JOB
+		 * @since 10/11/2016
+		 */
+		public function saveJob() 
+		{				
+				$idJob = $this->input->post('hddId');
+				
+				$data = array(
+					'job_description' => $this->input->post('jobName'),
+					'state' => $this->input->post('stateJob')
+				);			
+
+				//revisar si es para adicionar o editar
+				if ($idJob == '') {
+					$query = $this->db->insert('param_jobs', $data);
+				} else {
+					$this->db->where('id_job', $idJob);
+					$query = $this->db->update('param_jobs', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+		
 		
 		
 	    

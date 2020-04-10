@@ -267,6 +267,78 @@ class Settings extends CI_Controller {
 			echo json_encode($data);	
     }
 	
+	/**
+	 * job List
+     * @since 15/12/2016
+     * @author BMOTTAG
+	 */
+	public function job()
+	{
+			$this->load->model("general_model");
+			$arrParam = array(
+				"table" => "param_jobs",
+				"order" => "job_description",
+				"id" => "x"
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'job';
+			$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario job
+     * @since 15/12/2016
+     */
+    public function cargarModalJob() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idJob"] = $this->input->post("idJob");	
+			
+			if ($data["idJob"] != 'x') {
+				$this->load->model("general_model");
+				$arrParam = array(
+					"table" => "param_jobs",
+					"order" => "id_job",
+					"column" => "id_job",
+					"id" => $data["idJob"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("job_modal", $data);
+    }
+	
+	/**
+	 * Update job
+     * @since 15/12/2016
+     * @author BMOTTAG
+	 */
+	public function save_job()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idJob = $this->input->post('hddId');
+			
+			$msj = "You have add a new job!!";
+			if ($idJob != '') {
+				$msj = "You have update a Job!!";
+			}
+
+			if ($idJob = $this->settings_model->saveJob()) {
+				$data["result"] = true;		
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
+    }
+	
 
 	
 }
