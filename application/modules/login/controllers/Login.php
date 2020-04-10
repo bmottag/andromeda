@@ -20,7 +20,6 @@ class Login extends CI_Controller {
 			$data['inspectionType'] = FALSE;
 			//si envio llave encriptada, entonces busco el ID del vehiculo para pasarlo a la vista
 			if ($id != 'x') {				
-				$this->load->model("general_model");
 				$arrParam['encryption'] = $id;
 				$data['vehicleInfo'] = $this->general_model->get_vehicle_by($arrParam);
 
@@ -36,9 +35,7 @@ class Login extends CI_Controller {
 			$passwd = $this->security->xss_clean($this->input->post("inputPassword"));
 			$data['idVehicle'] = $this->input->post("hddId");
 			$data['inspectionType'] = $this->input->post("hddInpectionType");
-			
-			$this->load->model("general_model");
-			
+						
 			//busco informacion del vehiculo si existe
 			$data['linkInspection'] = FALSE;
 			$data['formInspection'] = FALSE;

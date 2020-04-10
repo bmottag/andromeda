@@ -6,7 +6,6 @@ class Settings extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model("settings_model");
-		$this->load->model("general_model");
 		$this->load->helper('form');
     }
 	
@@ -19,7 +18,6 @@ class Settings extends CI_Controller {
 	{			
 			$data['state'] = $state;
 			
-			$this->load->model("general_model");
 			if($state == 1){
 				$arrParam = array("filtroState" => TRUE);
 			}else{
@@ -43,7 +41,6 @@ class Settings extends CI_Controller {
 			$data['information'] = FALSE;
 			$data["idEmployee"] = $this->input->post("idEmployee");	
 			
-			$this->load->model("general_model");
 			$arrParam = array("filtro" => TRUE);
 			$data['roles'] = $this->general_model->get_roles($arrParam);
 
@@ -140,7 +137,6 @@ class Settings extends CI_Controller {
 				show_error('ERROR!!! - You are in the wrong place. The ID USER is missing.');
 			}
 			
-			$this->load->model("general_model");
 			$arrParam = array(
 				"table" => "user",
 				"order" => "id_user",
@@ -202,7 +198,6 @@ class Settings extends CI_Controller {
 	 */
 	public function company()
 	{
-			$this->load->model("general_model");
 			//se filtra por company_type para que solo se pueda editar los subcontratistas
 			$arrParam = array(
 				"table" => "param_company",
@@ -228,7 +223,6 @@ class Settings extends CI_Controller {
 			$data["idCompany"] = $this->input->post("idCompany");	
 			
 			if ($data["idCompany"] != 'x') {
-				$this->load->model("general_model");
 				$arrParam = array(
 					"table" => "param_company",
 					"order" => "id_company",

@@ -16,7 +16,6 @@ class Access extends CI_Controller {
 	 */
 	public function menu()
 	{
-			$this->load->model("general_model");
 			$arrParam = array();
 			$data['info'] = $this->general_model->get_menu($arrParam);
 
@@ -36,7 +35,6 @@ class Access extends CI_Controller {
 			$data["idMenu"] = $this->input->post("idMenu");	
 			
 			if ($data["idMenu"] != 'x') {
-				$this->load->model("general_model");
 				$arrParam = array("idMenu" => $data["idMenu"]);
 				$data['information'] = $this->general_model->get_menu($arrParam);
 			}
@@ -79,7 +77,6 @@ class Access extends CI_Controller {
 	 */
 	public function links()
 	{
-			$this->load->model("general_model");
 			$arrParam = array();
 			$data['info'] = $this->general_model->get_links($arrParam);
 			
@@ -98,7 +95,6 @@ class Access extends CI_Controller {
 			$data['information'] = FALSE;
 			$data["idLink"] = $this->input->post("idLink");	
 			
-			$this->load->model("general_model");
 			$arrParam = array("columnOrder" => "menu_name");
 			$data['menuList'] = $this->general_model->get_menu($arrParam);
 			
@@ -145,7 +141,6 @@ class Access extends CI_Controller {
 	 */
 	public function role_access()
 	{
-			$this->load->model("general_model");
 			$arrParam = array();
 			$data['info'] = $this->general_model->get_role_access($arrParam);
 
@@ -165,7 +160,6 @@ class Access extends CI_Controller {
 			$data['linkList'] = FALSE;
 			$data["idPermiso"] = $this->input->post("idPermiso");	
 			
-			$this->load->model("general_model");
 			$arrParam = array("columnOrder" => "menu_name");
 			$data['menuList'] = $this->general_model->get_menu($arrParam);
 			
@@ -204,7 +198,6 @@ class Access extends CI_Controller {
 			//para verificar si ya existe este permiso
 			$result_access = FALSE;
 
-			$this->load->model("general_model");
 			$arrParam = array(
 				"idMenu" => $this->input->post('id_menu'),
 				"idLink" => $this->input->post('id_link'),
@@ -236,9 +229,7 @@ class Access extends CI_Controller {
      * @author BMOTTAG
 	 */
 	public function videos()
-	{
-			$this->load->model("general_model");
-			
+	{			
 			$arrParam = array("linkType" => 4);
 			$data['info'] = $this->general_model->get_links($arrParam);
 			
@@ -255,7 +246,6 @@ class Access extends CI_Controller {
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 			
 			$data['information'] = FALSE;
-			$this->load->model("general_model");
 			$idLink = $this->input->post("idLink");	
 			
 			if ($idLink != 'x') {
@@ -301,8 +291,6 @@ class Access extends CI_Controller {
 	 */
 	public function manuals()
 	{
-			$this->load->model("general_model");
-			
 			$arrParam = array("linkType" => 5);
 			$data['info'] = $this->general_model->get_links($arrParam);
 			
@@ -318,7 +306,6 @@ class Access extends CI_Controller {
 	public function manuals_form($idLink = 'x', $error = '')
 	{			
 			$data['information'] = FALSE;
-			$this->load->model("general_model");
 
 			if ($idLink != 'x' && $idLink != '') {
 				$arrParam = array("idLink" => $idLink);
@@ -383,7 +370,6 @@ class Access extends CI_Controller {
 				"id" => $idJobLocate
 			);
 			
-			$this->load->model("general_model");
 			if ($this->general_model->deleteRecord($arrParam)) {
 				$this->session->set_flashdata('retornoExito', 'You have delete the image.');
 			} else {
@@ -402,7 +388,6 @@ class Access extends CI_Controller {
         $idMenu = $this->input->post('idMenu');
 				
 		//busco info tabla de stock
-		$this->load->model("general_model");
 		$arrParam = array("idMenu" => $idMenu);
 		$linkList = $this->general_model->get_links($arrParam);
 
@@ -431,7 +416,6 @@ class Access extends CI_Controller {
 				"id" => $idPermiso
 			);
 			
-			$this->load->model("general_model");
 			if ($this->general_model->deleteRecord($arrParam)) 
 			{
 				$data["result"] = true;
