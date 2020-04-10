@@ -195,6 +195,84 @@ class Settings extends CI_Controller {
 			$this->load->view("layout", $data);
 	}
 	
+	/**
+	 * Company List
+     * @since 15/12/2016
+     * @author BMOTTAG
+	 */
+	public function company()
+	{
+			$this->load->model("general_model");
+			//se filtra por company_type para que solo se pueda editar los subcontratistas
+			$arrParam = array(
+				"table" => "param_company",
+				"order" => "id_company",
+				"column" => "company_type",
+				"id" => 2
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'company';
+			$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario company
+     * @since 15/12/2016
+     */
+    public function cargarModalCompany() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idCompany"] = $this->input->post("idCompany");	
+			
+			if ($data["idCompany"] != 'x') {
+				$this->load->model("general_model");
+				$arrParam = array(
+					"table" => "param_company",
+					"order" => "id_company",
+					"column" => "id_company",
+					"id" => $data["idCompany"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("company_modal", $data);
+    }
+	
+	/**
+	 * Update Company
+     * @since 15/12/2016
+     * @author BMOTTAG
+	 */
+	public function save_company()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idCompany = $this->input->post('hddId');
+			
+			$msj = "You have add a new company!!";
+			if ($idCompany != '') {
+				$msj = "You have update a company!!";
+			}
+
+			if ($idCompany = $this->settings_model->saveCompany()) {
+				$data["result"] = true;
+				$data["idRecord"] = $idCompany;
+				
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$data["idRecord"] = "";
+				
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
+	
 
 	
 }

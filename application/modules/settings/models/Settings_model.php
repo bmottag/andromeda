@@ -104,6 +104,36 @@
 				}
 	    }
 		
+		/**
+		 * Add/Edit COMPANY
+		 * @since 13/12/2016
+		 */
+		public function saveCompany() 
+		{
+				$idCompany = $this->input->post('hddId');
+				
+				$data = array(
+					'company_name' => $this->input->post('company'),
+					'contact' => $this->input->post('contact'),
+					'movil_number' => $this->input->post('movilNumber'),
+					'email' => $this->input->post('email')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idCompany == '') {
+					$query = $this->db->insert('param_company', $data);
+					$idCompany = $this->db->insert_id();				
+				} else {
+					$this->db->where('id_company', $idCompany);
+					$query = $this->db->update('param_company', $data);
+				}
+				if ($query) {
+					return $idCompany;
+				} else {
+					return false;
+				}
+		}
+		
 		
 		
 	    
