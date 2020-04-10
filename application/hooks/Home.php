@@ -52,28 +52,38 @@ class Home {
                     }
                 }
                 
-				$controller = $this->ci->uri->segment(1);
-				
+				//consulto si existe permiso en menu para esa URL
 				$arrParam = array(
-					'idRole' => $this->ci->session->userdata('role'),
-					'menuURL' => $controller
+					'menuURL' => $ruta_validar
 				);
-                if($ruta_valida = $this->ci->mm->get_role_access($arrParam)) {
-					$error = FALSE;
-                }else{
-                    //Se consulta si el usuario actual tiene permiso para el controlador actual
+                if($ruta_valida = $this->ci->mm->get_role_access($arrParam)) 
+				{
+                    //Se consulta si el usuario actual tiene permiso para esa URL
                     $arrParam = array(
                         'idRole' => $this->ci->session->userdata('role'),
-						'linkURL' => $controller
+						'menuURL' => $ruta_validar
                     );
 
-                    if($ruta_valida = $this->ci->mm->get_role_access($arrParam)) {
-//echo $this->ci->db->last_query();						
-//pr($ruta_valida); exit;
-                        $error = FALSE;
-                    } else {
+                    if(!$ruta_valida = $this->ci->mm->get_role_access($arrParam)) {
                         $error = TRUE;
                     }
+				}else{					
+					//consulto si existe permiso para en los enlaces para esa URL
+					$arrParam = array(
+						'linkURL' => $ruta_validar
+					);
+					if($ruta_valida = $this->ci->mm->get_role_access($arrParam)) {
+						//Se consulta si el usuario actual tiene permiso para esa URL
+						$arrParam = array(
+							'idRole' => $this->ci->session->userdata('role'),
+							'linkURL' => $ruta_validar
+						);
+
+						if(!$ruta_valida = $this->ci->mm->get_role_access($arrParam)) 
+						{
+							$error = TRUE;
+						}
+					}
 				}
             }
         }

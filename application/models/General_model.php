@@ -166,10 +166,10 @@ class General_model extends CI_Model {
 			$this->db->where('L.link_state', $arrData["linkState"]);
 		}
 		if (array_key_exists("menuURL", $arrData)) {
-			$this->db->like('M.menu_url', $arrData["menuURL"]); 
+			$this->db->where('M.menu_url', $arrData["menuURL"]);
 		}
 		if (array_key_exists("linkURL", $arrData)) {
-			$this->db->like('L.link_url', $arrData["linkURL"]); 
+			$this->db->where('L.link_url', $arrData["linkURL"]);
 		}		
 		
 		$this->db->order_by('M.menu_order, L.order', 'asc');
