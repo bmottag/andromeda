@@ -43,8 +43,8 @@ class Home {
             }
             
             if ($error == FALSE) {
-                // oagarzond - 2016-05-25 - Se consulta si la ruta actual tiene permiso o no en el sistema
-                $this->ci->load->model('menu/menu_model', 'mm');
+                //Se consulta si la ruta actual tiene permiso o no en el sistema
+                $this->ci->load->model('general_model', 'mm');
                 $ruta_validar = '';
                 for ($i = 1; $i <= 5; $i++) {
                     if ($this->ci->uri->segment($i)) {
@@ -52,24 +52,29 @@ class Home {
                     }
                 }
                 
-                $arrParam = array('enlace' => $ruta_validar);
-                $ruta_valida = $this->ci->mm->consultar_enlaces($arrParam);
-                //pr($ruta_valida); exit;
-                if($ruta_valida) {
-                    // oagarzond - 2016-05-25 - Se consulta si el usuario actual tiene permiso para ver la ruta actual
+				$controller = $this->ci->uri->segment(1);
+				
+				$arrParam = array(
+					'idRole' => $this->ci->session->userdata('role'),
+					'menuURL' => $controller
+				);
+                if($ruta_valida = $this->ci->mm->get_role_access($arrParam)) {
+					$error = FALSE;
+                }else{
+                    //Se consulta si el usuario actual tiene permiso para el controlador actual
                     $arrParam = array(
-                        'idPers' => $this->ci->session->userdata('id'),
-                        'enlace' => $ruta_validar
+                        'idRole' => $this->ci->session->userdata('role'),
+						'linkURL' => $controller
                     );
-                    $permiso = $this->ci->mm->consultar_permisos_enlace($arrParam);
-                    //pr($permiso); exit;
-                    if (count($permiso) > 0) {
-                        $sessionData = array('idModulo' => $permiso[0]['FK_ID_MODULOS']);
-                        $this->ci->session->set_userdata($sessionData);
+
+                    if($ruta_valida = $this->ci->mm->get_role_access($arrParam)) {
+//echo $this->ci->db->last_query();						
+//pr($ruta_valida); exit;
+                        $error = FALSE;
                     } else {
                         $error = TRUE;
                     }
-                }
+				}
             }
         }
         
