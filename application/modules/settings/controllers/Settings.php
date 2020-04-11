@@ -274,7 +274,6 @@ class Settings extends CI_Controller {
 	 */
 	public function job()
 	{
-			$this->load->model("general_model");
 			$arrParam = array(
 				"table" => "param_jobs",
 				"order" => "job_description",
@@ -298,7 +297,6 @@ class Settings extends CI_Controller {
 			$data["idJob"] = $this->input->post("idJob");	
 			
 			if ($data["idJob"] != 'x') {
-				$this->load->model("general_model");
 				$arrParam = array(
 					"table" => "param_jobs",
 					"order" => "id_job",
@@ -346,7 +344,6 @@ class Settings extends CI_Controller {
 	 */
 	public function hazardActivity()
 	{
-			$this->load->model("general_model");
 			$arrParam = array(
 				"table" => "param_hazard_activity",
 				"order" => "hazard_activity",
@@ -370,7 +367,6 @@ class Settings extends CI_Controller {
 			$data["idHazardActivity"] = $this->input->post("idHazardActivity");	
 			
 			if ($data["idHazardActivity"] != 'x') {
-				$this->load->model("general_model");
 				$arrParam = array(
 					"table" => "param_hazard_activity",
 					"order" => "id_hazard_activity",
@@ -439,7 +435,6 @@ class Settings extends CI_Controller {
 			$data['information'] = FALSE;
 			$data["idHazard"] = $this->input->post("idHazard");	
 			
-			$this->load->model("general_model");
 			$arrParam = array(
 				"table" => "param_hazard_activity",
 				"order" => "hazard_activity",
@@ -493,6 +488,80 @@ class Settings extends CI_Controller {
 			} else {
 				$data["result"] = "error";
 				$data["mensaje"] = "Error al guardar. Intente nuevamente o actualice la p\u00e1gina.";
+				$data["idRecord"] = "";
+				
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
+    }
+	
+	/**
+	 * Material List
+     * @since 13/12/2016
+     * @author BMOTTAG
+	 */
+	public function material()
+	{
+			$arrParam = array(
+				"table" => "param_material_type",
+				"order" => "material",
+				"id" => "x"
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'material';
+			$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario material type
+     * @since 13/12/2016
+     */
+    public function cargarModalMaterial() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idMaterial"] = $this->input->post("idMaterial");	
+			
+			if ($data["idMaterial"] != 'x') {
+				$arrParam = array(
+					"table" => "param_material_type",
+					"order" => "id_material",
+					"column" => "id_material",
+					"id" => $data["idMaterial"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("material_modal", $data);
+    }
+	
+	/**
+	 * Update material
+     * @since 13/12/2016
+     * @author BMOTTAG
+	 */
+	public function save_material()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idMaterial = $this->input->post('hddId');
+			
+			$msj = "You have add a new Material Type!!";
+			if ($idMaterial != '') {
+				$msj = "You have update a Material Type!!";
+			}
+
+			if ($idMaterial = $this->settings_model->saveMaterial()) {
+				$data["result"] = true;
+				$data["idRecord"] = $idMaterial;
+				
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
 				$data["idRecord"] = "";
 				
 				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');

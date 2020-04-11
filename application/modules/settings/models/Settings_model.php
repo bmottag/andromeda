@@ -237,6 +237,33 @@
 				}
 		}
 		
+		/**
+		 * Add/Edit MATERIAL
+		 * @since 13/12/2016
+		 */
+		public function saveMaterial() 
+		{
+				$idMaterial = $this->input->post('hddId');
+				
+				$data = array(
+					'material' => $this->input->post('material')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idMaterial == '') {
+					$query = $this->db->insert('param_material_type', $data);
+					$idMaterial = $this->db->insert_id();				
+				} else {
+					$this->db->where('id_material', $idMaterial);
+					$query = $this->db->update('param_material_type', $data);
+				}
+				if ($query) {
+					return $idMaterial;
+				} else {
+					return false;
+				}
+		}
+		
 		
 	    
 	}
