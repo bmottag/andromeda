@@ -154,12 +154,12 @@ if($companyType == 2){ //si es subcontractor
 						//si hay una foto la muestro
 						if($lista["photo"]){
 						?>
-							<img src="<?php echo base_url($lista["photo"]); ?>" class="img-rounded" width="42" height="42" />
+							<img src="<?php echo base_url($lista["photo"]); ?>" class="img-rounded" width="32" height="32" />
 						<?php } 
 						
 									if(!$deshabilitar){
 						?>
-									<a href="<?php echo base_url("admin/photo/" . $lista['id_vehicle']); ?>" class="btn btn-primary btn-xs">Photo</a>
+									<a href="<?php echo base_url("settings/photo/" . $lista['id_vehicle']); ?>" class="btn btn-primary btn-xs">Photo</a>
 						<?php
 									}
 									echo "</td>";
@@ -176,7 +176,7 @@ if($lista["inspection_type"] == 99 ){
 						<?php  
 									if(!$deshabilitar){
 						?>
-									<a href="<?php echo base_url("admin/qr_code/" . $lista['id_vehicle']); ?>" class="btn btn-primary btn-xs">QR code</a>
+									<a href="<?php echo base_url("settings/qr_code/" . $lista['id_vehicle']); ?>" class="btn btn-primary btn-xs">QR code</a>
 						<?php
 									}
 						}
@@ -195,7 +195,7 @@ if($lista["inspection_type"] == 99 ){
 										if($lista["inspection_type"] != 99 ){
 										?>
 									
-										<a href="<?php echo base_url("admin/nextOilChange/" . $lista['id_vehicle']); ?>" class="btn btn-primary btn-xs">Inspections</a>
+										<a href="<?php echo base_url("settings/nextOilChange/" . $lista['id_vehicle']); ?>" class="btn btn-primary btn-xs">Inspections</a>
 										<?php }?>
 										
 										

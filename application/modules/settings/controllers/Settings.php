@@ -610,7 +610,6 @@ class Settings extends CI_Controller {
 			$data["companyType"] = $porciones[0];
 			$data["idVehicle"] = $porciones[1];		
 			
-			$this->load->model("general_model");
 			$arrParam = array(
 				"table" => "param_company",
 				"order" => "company_name",
@@ -719,6 +718,122 @@ class Settings extends CI_Controller {
 				$pass .= substr($cadena,$pos,1);
 			}
 			return $pass;
+	}
+	
+	/**
+	 * photo
+	 */
+	public function photo($idVehicle, $error = '')
+	{
+			if (empty($idVehicle)) {
+				show_error('ERROR!!! - You are in the wrong place.');
+			}
+			
+			//busco datos del vehiculo
+			$arrParam = array(
+				"idVehicle" => $idVehicle
+			);
+			$data['vehicleInfo'] = $this->settings_model->get_vehicle_info_by($arrParam);
+			
+			$data['error'] = $error; //se usa para mostrar los errores al cargar la imagen 
+			$data['idVehicle'] = $idVehicle; 
+			$data["view"] = 'vehicle_photo';
+			$this->load->view("layout", $data);
+	}	
+
+	/**
+	 * FUNCIÓN PARA SUBIR LA IMAGEN 
+	 * @param int vistaRegreso -> para saber si es de VCI o RENTADA
+	 */
+    function do_upload($type, $vistaRegreso) 
+	{
+        $config['upload_path'] = './images/vehicle/';
+        $config['overwrite'] = true;
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $config['max_size'] = '3000';
+        $config['max_width'] = '2024';
+        $config['max_height'] = '2008';
+        $idVehicle = $this->input->post("hddId");
+        $config['file_name'] = $idVehicle . "_" . $type;
+
+        $this->load->library('upload', $config);
+        //SI LA IMAGEN FALLA AL SUBIR MOSTRAMOS EL ERROR EN LA VISTA 
+        if (!$this->upload->do_upload()) {
+            $error = $this->upload->display_errors();
+            $this->$type($idVehicle,$error);
+        } else {
+            $file_info = $this->upload->data();//subimos la imagen
+			
+            //USAMOS LA FUNCIÓN create_thumbnail Y LE PASAMOS EL NOMBRE DE LA IMAGEN,
+            //ASÍ YA TENEMOS LA IMAGEN REDIMENSIONADA
+			if($type=="photo"){
+				$this->_create_thumbnail($file_info['file_name']);
+				$data = array('upload_data' => $this->upload->data());
+				$imagen = $file_info['file_name'];
+				$path = "images/vehicle/thumbs/" . $imagen;
+			}
+			
+			//actualizamos el campo photo
+			$arrParam = array(
+				"table" => "param_vehicle",
+				"primaryKey" => "id_vehicle",
+				"id" => $idVehicle,
+				"column" => $type,
+				"value" => $path
+			);
+
+			$data['linkBack'] = "settings/vehicle/" . $vistaRegreso;
+			$data['titulo'] = "<i class='fa fa-automobile'></i>VEHICLE";
+			
+			if($this->general_model->updateRecord($arrParam))
+			{
+				$data['clase'] = "alert-success";
+				$data['msj'] = "Good job, you have upload the photo.";			
+			}else{
+				$data['clase'] = "alert-danger";
+				$data['msj'] = "Ask for help.";
+			}
+						
+			$data["view"] = 'template/answer';
+			$this->load->view("layout", $data);
+			//redirect('employee/photo');
+        }
+    }
+	
+    //FUNCIÓN PARA CREAR LA MINIATURA A LA MEDIDA QUE LE DIGAMOS
+    function _create_thumbnail($filename) 
+	{
+        $config['image_library'] = 'gd2';
+        //CARPETA EN LA QUE ESTÁ LA IMAGEN A REDIMENSIONAR
+        $config['source_image'] = 'images/vehicle/' . $filename;
+        $config['create_thumb'] = TRUE;
+        $config['maintain_ratio'] = TRUE;
+        //CARPETA EN LA QUE GUARDAMOS LA MINIATURA
+        $config['new_image'] = 'images/vehicle/thumbs/';
+        $config['width'] = 150;
+        $config['height'] = 150;
+        $this->load->library('image_lib', $config);
+        $this->image_lib->resize();
+    }
+	
+	/**
+	 * qr_code
+	 */
+	public function qr_code($idVehicle)
+	{
+			if (empty($idVehicle)) {
+				show_error('ERROR!!! - You are in the wrong place.');
+			}
+			
+			//busco datos del vehiculo
+			$arrParam = array(
+				"idVehicle" => $idVehicle
+			);
+			$data['vehicleInfo'] = $this->settings_model->get_vehicle_info_by($arrParam);
+			
+			$data['idVehicle'] = $idVehicle;
+			$data["view"] = 'vehicle_qr_code';
+			$this->load->view("layout", $data);
 	}
 	
 
