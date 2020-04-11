@@ -264,6 +264,89 @@
 				}
 		}
 		
+		/**
+		 * Get vehicle list
+		 * Param int $companyType -> 1: VCI; 2: Subcontractor
+		 * Param int $vehicleType -> 1: Pickup; 2: Construction Equipment; 3: Trucks; 4: Special Equipment; 99: Otros
+		 * @since 5/5/2017
+		 */
+		public function get_vehicle_info_by($arrData) 
+		{		
+				$this->db->select();
+				$this->db->join('param_company C', 'C.id_company = A.fk_id_company', 'INNER');
+				$this->db->join('param_vehicle_type_2 T', 'T.id_type_2 = A.type_level_2', 'INNER');
+				$this->db->where('A.state', 1);//solo mostrar vehiclos activos
+
+				if (array_key_exists("companyType", $arrData)) {
+					$this->db->where('C.company_type', $arrData["companyType"]);
+
+					//si es de VCI entonces filtrar por tipo de inspeccion de lo contrario no se hace el filtro
+					if($arrData["companyType"]==1){
+						if (array_key_exists("vehicleType", $arrData)) {
+							$this->db->where('T.inspection_type', $arrData["vehicleType"]);
+						}
+					}
+				}
+				
+				if (array_key_exists("idVehicle", $arrData)) {
+					$this->db->where('A.id_vehicle', $arrData["idVehicle"]);
+				}
+				
+				$this->db->order_by('T.inspection_type, C.id_company, A.unit_number', 'asc');
+				$query = $this->db->get('param_vehicle A');
+
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+		
+		/**
+		 * Add/Edit vehicle
+		 * @since 15/12/2016
+		 * @review 27/12/2016
+		 */
+		public function saveVehicle($pass) 
+		{
+				$idVehicle = $this->input->post('hddId');
+				
+				$data = array(
+					'fk_id_company' => $this->input->post('company'),
+					'type_level_1' => $this->input->post('type1'),
+					'type_level_2' => $this->input->post('type2'),
+					'make' => $this->input->post('make'),
+					'model' => $this->input->post('model'),
+					'manufacturer_date' => $this->input->post('manufacturer'),
+					'description' => $this->input->post('description'),
+					'unit_number' => $this->input->post('unitNumber'),
+					'state' => $this->input->post('state'),
+					'hours' => $this->input->post('hours')
+				);	
+
+				//revisar si es para adicionar o editar
+				if ($idVehicle == '') {							
+					$query = $this->db->insert('param_vehicle', $data);
+					$idVehicle = $this->db->insert_id();
+					
+					//actualizo la url del codigo QR
+					$path = $idVehicle . $pass;
+					$rutaQRcode = "images/vehicle/" . $idVehicle . "_qr_code.png";
+			
+					//actualizo campo con el path encriptado
+					$sql = "UPDATE param_vehicle SET encryption = '$path',qr_code = '$rutaQRcode'  WHERE id_vehicle = $idVehicle";
+					$query = $this->db->query($sql);
+				} else {
+					$this->db->where('id_vehicle', $idVehicle);
+					$query = $this->db->update('param_vehicle', $data);
+				}
+				if ($query) {
+					return $idVehicle;
+				} else {
+					return false;
+				}
+		}
+		
 		
 	    
 	}

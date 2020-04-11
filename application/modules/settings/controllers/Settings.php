@@ -570,6 +570,157 @@ class Settings extends CI_Controller {
 			echo json_encode($data);
     }
 	
+	/**
+	 * vehicle List
+     * @since 15/12/2016
+	 * @review 5/5/2017
+	 * Param int $companyType -> 1: VCI; 2: Subcontractor
+	 * Param int $vehicleType -> 1: Pickup; 2: Construction Equipment; 3: Trucks; 4: Special Equipment; 99: Otros
+     * @author BMOTTAG
+	 */
+	public function vehicle($companyType, $vehicleType=1)
+	{
+			$data['companyType'] = $companyType;
+			$data['vehicleType'] = $vehicleType;
+			$data['title'] = $companyType==1?"VCI":"RENTALS";
+			
+			$arrParam = array(
+				"companyType" => $companyType,
+				"vehicleType" => $vehicleType
+			);
+			$data['info'] = $this->settings_model->get_vehicle_info_by($arrParam);//vehicle list
+			$data["view"] = 'vehicle';
+			$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario vehicle
+     * @since 15/12/2016
+	 * @review 27/12/2016
+     */
+    public function cargarModalVehicle() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$idVehicle = $this->input->post("idVehicle");
+			//como se coloca un ID diferente para que no entre en conflicto con los otros modales, toca sacar el ID
+			$porciones = explode("-", $idVehicle);
+			
+			$data["companyType"] = $porciones[0];
+			$data["idVehicle"] = $porciones[1];		
+			
+			$this->load->model("general_model");
+			$arrParam = array(
+				"table" => "param_company",
+				"order" => "company_name",
+				"column" => "company_type",
+				"id" => 2
+			);
+			$data['company'] = $this->general_model->get_basic_search($arrParam);//company list
+			
+			//buscar la lista de tipo de vehiculo
+			$arrParam = array(
+				"table" => "param_vehicle_type_2",
+				"order" => "type_2",
+				"column" => "show_vehicle",
+				"id" => 1
+			);
+			$data['vehicleType'] = $this->general_model->get_basic_search($arrParam);//vehicleType list
+			
+			if ($data["idVehicle"] != 'x') {
+				$arrParam = array(
+					"table" => "param_vehicle",
+					"order" => "id_vehicle",
+					"column" => "id_vehicle",
+					"id" => $data["idVehicle"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("vehicle_modal", $data);
+    }
+	
+	/**
+	 * Update vehicle
+     * @since 15/12/2016
+	 * @review 27/12/2016
+     * @author BMOTTAG
+	 */
+	public function save_vehicle()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idVehicle = $this->input->post('hddId');
+			$idCompany = $this->input->post('company');
+			$data["compannyType"] = $idCompany==1?1:2; //1:VCI; 2:Subcontractor
+			
+			$msj = "You have add a new vehicle!!";
+			$flag = true;
+			$pass = '';
+			if ($idVehicle != '') {
+				$msj = "You have update a vehicle!!";
+				$flag = false;
+			}else{
+				//para vehiculo nuevo se genera clave para generar el codigo QR
+				$pass = $this->generaPass();
+			}
+
+			if ($idVehicle = $this->settings_model->saveVehicle($pass)) 
+			{
+				if($flag){ //si es un registro nuevo entonces guardo el historial de cambio de aceite
+					$state = 0;//primer registro
+					$this->settings_model->saveVehicleNextOilChange($idVehicle, $state);
+					
+					//si es un registro nuevo genero el codigo QR y subo la imagen
+					//INICIO - genero imagen con la libreria y la subo 
+					$this->load->library('ciqrcode');
+
+					$valorQRcode = base_url("login/index/" . $idVehicle . $pass);
+					$rutaImagen = "images/vehicle/" . $idVehicle . "_qr_code.png";
+					
+					$params['data'] = $valorQRcode;
+					$params['level'] = 'H';
+					$params['size'] = 10;
+					$params['savename'] = FCPATH.$rutaImagen;
+									
+					$this->ciqrcode->generate($params);
+					//FIN - genero imagen con la libreria y la subo
+				}
+				
+				$data["result"] = true;		
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+			echo json_encode($data);
+    }
+	
+	public function generaPass()
+	{
+			//Se define una cadena de caractares. Te recomiendo que uses esta.
+			$cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+			//Obtenemos la longitud de la cadena de caracteres
+			$longitudCadena=strlen($cadena);
+			 
+			//Se define la variable que va a contener la contraseña
+			$pass = "";
+			//Se define la longitud de la contraseña, en mi caso 10, pero puedes poner la longitud que quieras
+			$longitudPass=50;
+			 
+			//Creamos la contraseña
+			for($i=1 ; $i<=$longitudPass ; $i++){
+				//Definimos numero aleatorio entre 0 y la longitud de la cadena de caracteres-1
+				$pos=rand(0,$longitudCadena-1);
+			 
+				//Vamos formando la contraseña en cada iteraccion del bucle, añadiendo a la cadena $pass la letra correspondiente a la posicion $pos en la cadena de caracteres definida.
+				$pass .= substr($cadena,$pos,1);
+			}
+			return $pass;
+	}
+	
 
 	
 }
