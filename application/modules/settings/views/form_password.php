@@ -31,35 +31,35 @@
 						<input type="hidden" id="hddState" name="hddState" value="<?php echo $information[0]["state"]; ?>"/>
 						
 						<div class="form-group">
-							<label class="col-sm-4 control-label" for="firstName">First name</label>
+							<label class="col-sm-4 control-label" for="firstName">First name:</label>
 							<div class="col-sm-5">
 								<input type="text" id="firstName" name="firstName" class="form-control" value="<?php echo $information[0]['first_name']; ?>" disabled >
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="col-sm-4 control-label" for="lastName">Last name</label>
+							<label class="col-sm-4 control-label" for="lastName">Last name:</label>
 							<div class="col-sm-5">
 								<input type="text" id="lastName" name="lastName" class="form-control" value="<?php echo $information[0]['last_name']; ?>" disabled >
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="col-sm-4 control-label" for="username">User name</label>
+							<label class="col-sm-4 control-label" for="username">User name:</label>
 							<div class="col-sm-5">
 								<input type="text" id="user" name="user" class="form-control" value="<?php echo $information[0]['log_user']; ?>" disabled >
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="col-sm-4 control-label" for="inputPassword">Password</label>
+							<label class="col-sm-4 control-label" for="inputPassword">Password: *</label>
 							<div class="col-sm-5">
 								<input type="text" id="inputPassword" name="inputPassword" class="form-control" >
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="col-sm-4 control-label" for="inputConfirm">Confirm Password</label>
+							<label class="col-sm-4 control-label" for="inputConfirm">Confirm Password: *</label>
 							<div class="col-sm-5">
 								<input type="text" id="inputConfirm" name="inputConfirm" class="form-control" >
 							</div>

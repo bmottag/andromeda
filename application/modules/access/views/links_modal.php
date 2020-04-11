@@ -13,7 +13,7 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="perfil">Menu name</label>
+					<label class="control-label" for="perfil">Menu name : *</label>
 					<select name="id_menu" id="id_menu" class="form-control" required>
 						<option value="">Select...</option>
 						<?php for ($i = 0; $i < count($menuList); $i++) { ?>

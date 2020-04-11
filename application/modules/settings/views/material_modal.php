@@ -13,7 +13,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
-						<label for="type" class="control-label">Material Type : *</label>
+						<label for="type" class="control-label">Material Type: *</label>
 						<input type="text" id="material" name="material" class="form-control" value="<?php echo $information?$information[0]["material"]:""; ?>" placeholder="Material Type" required >
 				</div>
 			</div>

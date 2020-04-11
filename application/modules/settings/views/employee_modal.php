@@ -13,14 +13,14 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="firstName">First name</label>
+					<label class="control-label" for="firstName">First name: *</label>
 					<input type="text" id="firstName" name="firstName" class="form-control" value="<?php echo $information?$information[0]["first_name"]:""; ?>" placeholder="First Name" required >
 				</div>
 			</div>
 			
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="lastName">Last name</label>
+					<label class="control-label" for="lastName">Last name: *</label>
 					<input type="text" id="lastName" name="lastName" class="form-control" value="<?php echo $information?$information[0]["last_name"]:""; ?>" placeholder="Last Name" required >
 				</div>
 			</div>
@@ -29,14 +29,14 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="user">User name</label>
+					<label class="control-label" for="user">User name: *</label>
 					<input type="text" id="user" name="user" class="form-control" value="<?php echo $information?$information[0]["log_user"]:""; ?>" placeholder="User Name" required >
 				</div>
 			</div>
 			
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="email">Email</label>
+					<label class="control-label" for="email">Email: *</label>
 					<input type="text" class="form-control" id="email" name="email" value="<?php echo $information?$information[0]["email"]:""; ?>" placeholder="Email" />
 				</div>
 			</div>
@@ -45,14 +45,14 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="movilNumber">Movil number</label>
+					<label class="control-label" for="movilNumber">Movil number: *</label>
 					<input type="text" id="movilNumber" name="movilNumber" class="form-control" value="<?php echo $information?$information[0]["movil"]:""; ?>" placeholder="Movil Number" required >
 				</div>
 			</div>
 				
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="id_role">User role</label>					
+					<label class="control-label" for="id_role">User role: *</label>					
 					<select name="id_role" id="id_role" class="form-control" required>
 						<option value="">Select...</option>
 						<?php for ($i = 0; $i < count($roles); $i++) { ?>
@@ -65,7 +65,7 @@
 	<?php if($information){ ?>
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="state">State</label>
+					<label class="control-label" for="state">State: *</label>
 					<select name="state" id="state" class="form-control" required>
 						<option value=''>Select...</option>
 						<option value=1 <?php if($information[0]["state"] == 1) { echo "selected"; }  ?>>Active</option>
