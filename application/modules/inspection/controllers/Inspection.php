@@ -591,8 +591,6 @@ if ($fuel_system_check == 0) {
 	 */
 	public function add_generator_inspection($id = 'x')
 	{
-			
-			
 			$data['information'] = FALSE;
 					
 			//si envio el id, entonces busco la informacion 
@@ -643,9 +641,11 @@ if ($fuel_system_check == 0) {
 
 			if ($idGeneratorInspection = $this->inspection_model->saveGeneratorInspection()) 
 			{
+				//update current hours 
+				$this->inspection_model->saveCurrentHours();
+				
 				/**
-				 * si es un registro nuevo entonces guardo el historial de cambio de aceite
-				 * y verifico si hay comentarios y envio correo al administrador
+				 * verifico si hay comentarios y envio correo al administrador
 				 */
 				if($flag)
 				{
@@ -675,7 +675,6 @@ if ($fuel_system_check == 0) {
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
 						$company = $parametric[1]["value"];
-
 
 						$mensaje = "<html>
 						<head>
@@ -707,9 +706,9 @@ if ($fuel_system_check == 0) {
 					$oilChange = $this->input->post('oilChange');
 					$diferencia = $oilChange - $hours;
 										
-					if($diferencia <= 50){
+					if($diferencia <= 50)
+					{
 						//enviar correo
-						
 						//mensaje del correo
 						$emailMsn = "<p>The following vehicle should change the oil as soon as possible.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
@@ -731,7 +730,6 @@ if ($fuel_system_check == 0) {
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
 						$company = $parametric[1]["value"];
-
 
 						$mensaje = "<html>
 						<head>
