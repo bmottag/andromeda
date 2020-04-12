@@ -779,8 +779,6 @@ if ($fuel_system_check == 0) {
 	 */
 	public function add_sweeper_inspection($id = 'x')
 	{
-			
-			
 			$data['information'] = FALSE;
 					
 			//si envio el id, entonces busco la informacion 
@@ -831,9 +829,11 @@ if ($fuel_system_check == 0) {
 
 			if ($idSweeperInspection = $this->inspection_model->saveSweeperInspection()) 
 			{
+				//update current hours 
+				$this->inspection_model->saveCurrentHours();
+				
 				/**
-				 * si es un registro nuevo entonces guardo el historial de cambio de aceite
-				 * y verifico si hay comentarios y envio correo al administrador
+				 * verifico si hay comentarios y envio correo al administrador
 				 */
 				if($flag)
 				{					
@@ -863,7 +863,6 @@ if ($fuel_system_check == 0) {
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
 						$company = $parametric[1]["value"];
-
 
 						$mensaje = "<html>
 						<head>
@@ -899,9 +898,9 @@ if ($fuel_system_check == 0) {
 					$oilChange2 = $this->input->post('oilChange2');
 					$diferencia2 = $oilChange2 - $hours2;
 										
-					if($diferencia <= 50 || $diferencia2 <= 50){
+					if($diferencia <= 50 || $diferencia2 <= 50)
+					{
 						//enviar correo
-						
 						//mensaje del correo
 						$emailMsn = "<p>The following vehicle need to chage the oil as soon as posible.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
