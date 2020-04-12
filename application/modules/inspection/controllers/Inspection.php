@@ -969,8 +969,6 @@ if ($fuel_system_check == 0) {
 	 */
 	public function add_hydrovac_inspection($id = 'x')
 	{
-			
-			
 			$data['information'] = FALSE;
 					
 			//si envio el id, entonces busco la informacion 
@@ -1024,6 +1022,9 @@ if ($fuel_system_check == 0) {
 				//actualizo seguimiento en la tabla de vehiculos, para mostrar mensaje
 				$this->inspection_model->saveSeguimientoHydrovac();
 				
+				//update current hours 
+				$this->inspection_model->saveCurrentHours();
+				
 				/**
 				 * si es un registro nuevo entonces guardo el historial de cambio de aceite
 				 * y verifico si hay comentarios y envio correo al administrador
@@ -1056,7 +1057,6 @@ if ($fuel_system_check == 0) {
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
 						$company = $parametric[1]["value"];
-
 
 						$mensaje = "<html>
 						<head>
@@ -1202,9 +1202,9 @@ if ($fuel_system_check == 0) {
 					$oilChange3 = $this->input->post('oilChange3');
 					$diferencia3 = $oilChange3 - $hours3;
 										
-					if($diferencia <= 50 || $diferencia2 <= 50 || $diferencia3 <= 50){
+					if($diferencia <= 50 || $diferencia2 <= 50 || $diferencia3 <= 50)
+					{
 						//enviar correo
-						
 						//mensaje del correo
 						$emailMsn = "<p>The following vehicle need to chage the oil as soon as posible.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
@@ -1226,7 +1226,6 @@ if ($fuel_system_check == 0) {
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
 						$company = $parametric[1]["value"];
-
 
 						$mensaje = "<html>
 						<head>

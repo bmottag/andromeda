@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/inspection/sweeper_inspection.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/inspection/hydrovac_inspection_v2.js"); ?>"></script>
 
 <?php
 /**
@@ -13,21 +13,26 @@ if($userRol==99){
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <?php } ?>
 
+<?php 	 
+	$idVehicle = $vehicleInfo[0]["id_vehicle"];
+?>
+
 <div id="page-wrapper">
 	<br>
 	
 <form  name="form" id="form" class="form-horizontal" method="post" >
-	<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_inspection_sweeper"]:""; ?>"/>
-	<input type="hidden" id="hddIdVehicle" name="hddIdVehicle" value="<?php echo $vehicleInfo[0]["id_vehicle"]; ?>"/>
+	<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_inspection_hydrovac"]:""; ?>"/>
+	<input type="hidden" id="hddIdVehicle" name="hddIdVehicle" value="<?php echo $idVehicle; ?>"/>
 	<input type="hidden" id="oilChange" name="oilChange" value="<?php echo $vehicleInfo[0]["oil_change"]; ?>"/>
 	<input type="hidden" id="oilChange2" name="oilChange2" value="<?php echo $vehicleInfo[0]["oil_change_2"]; ?>"/>
+	<input type="hidden" id="oilChange3" name="oilChange3" value="<?php echo $vehicleInfo[0]["oil_change_3"]; ?>"/>
 	
 	<!-- /.row -->
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-purpura">
 				<div class="panel-heading">
-					<i class="fa fa-search"></i> <strong>INSPECTION - STREET SWEEPER INSPECTION - III</strong><!-- #3 -->
+					<i class="fa fa-search"></i> <strong>INSPECTION - HYDRO-VAC INSPECTION - IV</strong><!-- #4 -->
 				</div>
 				<div class="panel-body">
 
@@ -57,23 +62,89 @@ if ($retornoError) {
 }
 ?> 
 
-					<?php if($vehicleInfo[0]["photo"]){ ?>
-						<div class="form-group">
-							<div class="row" align="center">
-								<img src="<?php echo base_url($vehicleInfo[0]["photo"]); ?>" class="img-rounded" alt="Vehicle Photo" />
-							</div>
-						</div>
-					<?php } ?>
+<?php
+$heater_check = $vehicleInfo[0]["heater_check"];
+$brakes_check = $vehicleInfo[0]["brakes_check"];
+$lights_check = $vehicleInfo[0]["lights_check"];
+$steering_wheel_check = $vehicleInfo[0]["steering_wheel_check"];
+$suspension_system_check = $vehicleInfo[0]["suspension_system_check"];
+$tires_check = $vehicleInfo[0]["tires_check"];
+$wipers_check = $vehicleInfo[0]["wipers_check"];
+$air_brake_check = $vehicleInfo[0]["air_brake_check"];
+$driver_seat_check = $vehicleInfo[0]["driver_seat_check"];
+$fuel_system_check = $vehicleInfo[0]["fuel_system_check"];
+
+
+//preguntar especiales para HYDROVAC para que muestre mensaje si es inseguro sacar el camion
+if ($heater_check == 0 || $brakes_check == 0 || $lights_check == 0 || $steering_wheel_check == 0 || $suspension_system_check == 0 || $tires_check == 0 || $wipers_check == 0 || $air_brake_check == 0 || $driver_seat_check == 0 || $fuel_system_check == 0) {
+    ?>
+	<div class="col-lg-12">	
+		<div class="alert alert-danger ">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			A major defect has beed identified in the last inspecton, a driver is not legally permitted
+			to operate the vehicle until that defect is prepared.
+			
+<?php 
+if ($heater_check == 0) {
+	echo "<br>Heater - Fail"; 
+}
+if ($brakes_check == 0) {
+	echo "<br>Brake pedal - Fail"; 
+}
+if ($lights_check == 0) {
+	echo "<br>Lamps and reflectors - Fail"; 
+}
+if ($steering_wheel_check == 0) {
+	echo "<br>Steering wheel - Fail"; 
+}
+if ($suspension_system_check == 0) {
+	echo "<br>Suspension system - Fail"; 
+}
+if ($tires_check == 0) {
+	echo "<br>Tires/Lug Nuts/Pressure - Fail"; 
+}
+if ($wipers_check == 0) {
+	echo "<br>Wipers/Washers - Fail"; 
+}
+if ($air_brake_check == 0) {
+	echo "<br>Air brake system - Fail"; 
+}
+if ($driver_seat_check == 0) {
+	echo "<br>Driver and Passenger door - Fail"; 
+}
+if ($fuel_system_check == 0) {
+	echo "<br>Fuel system - Fail"; 
+}
+			
+?>
+			
+			
+		</div>
+	</div>
+<?php
+}
+?> 
+
+			<?php if($vehicleInfo[0]["photo"]){ ?>
+				<div class="form-group">
+					<div class="row" align="center">
+						<img src="<?php echo base_url($vehicleInfo[0]["photo"]); ?>" class="img-rounded" alt="Vehicle Photo" />
+					</div>
+				</div>
+			<?php } ?>
+		
+			<strong>Description: </strong><?php echo $vehicleInfo[0]['description']; ?><br>
+			<strong>Unit Number: </strong><?php echo $vehicleInfo[0]['unit_number']; ?><br>
+			<p class='text-danger'>
+				<strong>Engine current Hours: </strong><?php echo number_format($vehicleInfo[0]["hours"]); ?> hours
+				<br><strong>Next oil change: </strong><?php echo number_format($vehicleInfo[0]["oil_change"]); ?> hours
 				
-					<strong>Description: </strong><?php echo $vehicleInfo[0]['description']; ?><br>
-					<strong>Unit Number: </strong><?php echo $vehicleInfo[0]['unit_number']; ?><br>
-					<p class='text-danger'>
-						<strong>Truck engine current Hours: </strong><?php echo number_format($vehicleInfo[0]["hours"]); ?> hours
-						<br><strong>Next oil change: </strong><?php echo number_format($vehicleInfo[0]["oil_change"]); ?> hours
-						
-						<br><strong>Sweeper engine current Hours: </strong><?php echo number_format($vehicleInfo[0]["hours_2"]); ?> hours
-						<br><strong>Next oil change: </strong><?php echo number_format($vehicleInfo[0]["oil_change_2"]); ?> hours
-					</p>
+				<br><strong>Hydraulic pump current Hours: </strong><?php echo number_format($vehicleInfo[0]["hours_2"]); ?> hours
+				<br><strong>Next oil change: </strong><?php echo number_format($vehicleInfo[0]["oil_change_2"]); ?> hours
+				
+				<br><strong>Blower current Hours: </strong><?php echo number_format($vehicleInfo[0]["hours_3"]); ?> hours
+				<br><strong>Next oil change: </strong><?php echo number_format($vehicleInfo[0]["oil_change_3"]); ?> hours
+			</p>
 					
 <!-- INICIO Firma del conductor -->					
 <?php if($information){ 
@@ -126,7 +197,7 @@ if ($retornoError) {
 
 <?php } ?>
 
-<a class="btn <?php echo $class; ?>" href="<?php echo base_url("inspection/add_signature/sweeper/" . $information[0]["id_inspection_sweeper"]); ?>"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Signature </a>
+<a class="btn <?php echo $class; ?>" href="<?php echo base_url("inspection/add_signature/hydrovac/" . $information[0]["id_inspection_hydrovac"]); ?>"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Signature </a>
 
 									</div>
 								</div>
@@ -159,17 +230,24 @@ if ($retornoError) {
 				<div class="panel-body">
 				
 					<div class="form-group">									
-						<label class="col-sm-4 control-label" for="hours">Truck engine current hours <small class="text-primary">(Horas actuales)</small></label>
+						<label class="col-sm-4 control-label" for="hours">Engine current hours <small class="text-primary">(Horas actuales)</small></label>
 						<div class="col-sm-5">
 							<input type="text" id="hours" name="hours" class="form-control" value="<?php if($information){ echo $vehicleInfo[0]["hours"]; }?>" placeholder="Hours" required >
-						</div>
+						</div>						
 					</div>
 					
 					<div class="form-group">									
-						<label class="col-sm-4 control-label" for="hours2">Sweeper engine current hours <small class="text-primary">(Horas actuales)</small></label>
+						<label class="col-sm-4 control-label" for="hours2">Hydraulic pump current hours <small class="text-primary">(Horas actuales)</small></label>
 						<div class="col-sm-5">
 							<input type="text" id="hours2" name="hours2" class="form-control" value="<?php if($information){ echo $vehicleInfo[0]["hours_2"]; }?>" placeholder="Hours" required >
-						</div>
+						</div>						
+					</div>
+					
+					<div class="form-group">									
+						<label class="col-sm-4 control-label" for="hours3">Blower current hours <small class="text-primary">(Horas actuales)</small></label>
+						<div class="col-sm-5">
+							<input type="text" id="hours3" name="hours3" class="form-control" value="<?php if($information){ echo $vehicleInfo[0]["hours_3"]; }?>" placeholder="Hours" required >
+						</div>						
 					</div>
 					
 <?php
@@ -284,99 +362,13 @@ if($userRol==99){
 							</label>
 						</div>
 					</div>
-					
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="hydraulic">Hydraulic Fluids <small class="text-primary">(Aceite hidráulico)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="hydraulic" id="hydraulic1" value=0 <?php if($information && $information[0]["hydraulic"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="hydraulic" id="hydraulic2" value=1 <?php if($information && $information[0]["hydraulic"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="hydraulic" id="hydraulic3" value=99 <?php if($information && $information[0]["hydraulic"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
 
 				</div>
 			</div>
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col-lg-12">				
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<strong>ENGINE SWEEPER</strong>
-				</div>
-				<div class="panel-body">
-									
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="beltSweeper">Belts/Hoses <small class="text-primary">(Correas/ Mangueras)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="beltSweeper" id="beltSweeper1" value=0 <?php if($information && $information[0]["belt_sweeper"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="beltSweeper" id="beltSweeper2" value=1 <?php if($information && $information[0]["belt_sweeper"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="beltSweeper" id="beltSweeper3" value=99 <?php if($information && $information[0]["belt_sweeper"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-										
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="oilSweeper">Oil Level <small class="text-primary">(Nivel de Aceite )</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="oilSweeper" id="oilSweeper1" value=0 <?php if($information && $information[0]["oil_level_sweeper"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="oilSweeper" id="oilSweeper2" value=1 <?php if($information && $information[0]["oil_level_sweeper"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="oilSweeper" id="oilSweeper3" value=99 <?php if($information && $information[0]["oil_level_sweeper"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-										
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="coolantLevelSweeper">Coolant Level <small class="text-primary">(Nivel de Liquido Refrigerante )</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="coolantLevelSweeper" id="coolantLevelSweeper1" value=0 <?php if($information && $information[0]["coolant_level_sweeper"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="coolantLevelSweeper" id="coolantLevelSweeper2" value=1 <?php if($information && $information[0]["coolant_level_sweeper"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="coolantLevelSweeper" id="coolantLevelSweeper3" value=99 <?php if($information && $information[0]["coolant_level_sweeper"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="coolantLeaksSweeper">Coolant/Oil Leaks <small class="text-primary">(Fugas de Refrigerante / Aceite)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="coolantLeaksSweeper" id="coolantLeaksSweeper1" value=0 <?php if($information && $information[0]["coolant_leaks_sweeper"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="coolantLeaksSweeper" id="coolantLeaksSweeper2" value=1 <?php if($information && $information[0]["coolant_leaks_sweeper"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="coolantLeaksSweeper" id="coolantLeaksSweeper3" value=99 <?php if($information && $information[0]["coolant_leaks_sweeper"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
 
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<div class="row">
 		<div class="col-lg-12">				
@@ -402,7 +394,7 @@ if($userRol==99){
 					</div>
 					
 					<div class="form-group">
-						<label class="col-sm-4 control-label" for="hazardLights">Hazard lights <small class="text-primary">(Luces intermitentes)</small></label>
+						<label class="col-sm-4 control-label" for="hazardLights">Hazard Lights <small class="text-primary">(Luces intermitentes)</small></label>
 						<div class="col-sm-5">
 							<label class="radio-inline">
 								<input type="radio" name="hazardLights" id="hazardLights1" value=0 <?php if($information && $information[0]["hazard_lights"] == 0) { echo "checked"; }  ?>>Fail
@@ -417,7 +409,7 @@ if($userRol==99){
 					</div>
 					
 					<div class="form-group">
-						<label class="col-sm-4 control-label" for="clearanceLights">Clearance lights <small class="text-primary">(Luces de posición)</small></label>
+						<label class="col-sm-4 control-label" for="clearanceLights">Clearance Lights <small class="text-primary">(Luces de posición)</small></label>
 						<div class="col-sm-5">
 							<label class="radio-inline">
 								<input type="radio" name="clearanceLights" id="clearanceLights1" value=0 <?php if($information && $information[0]["clearance_lights"] == 0) { echo "checked"; }  ?>>Fail
@@ -447,7 +439,7 @@ if($userRol==99){
 					</div>
 					
 					<div class="form-group">
-						<label class="col-sm-4 control-label" for="workLights">Work Lights <small class="text-primary">(Luces principales)</small></label>
+						<label class="col-sm-4 control-label" for="workLights">Work & Boom Lights <small class="text-primary">(Luces principales)</small></label>
 						<div class="col-sm-5">
 							<label class="radio-inline">
 								<input type="radio" name="workLights" id="workLights1" value=0 <?php if($information && $information[0]["work_lights"] == 0) { echo "checked"; }  ?>>Fail
@@ -623,7 +615,7 @@ if($userRol==99){
 				<div class="panel-body">
 
 					<div class="form-group">
-						<label class="col-sm-4 control-label" for="SteringWheels">Stering Wheels <small class="text-primary"></small></label>
+						<label class="col-sm-4 control-label" for="SteringWheels">Stering Axle <small class="text-primary">(Eje de dirección)</small></label>
 						<div class="col-sm-5">
 							<label class="radio-inline">
 								<input type="radio" name="SteringWheels" id="SteringWheels1" value=0 <?php if($information && $information[0]["stering_wheels"] == 0) { echo "checked"; }  ?>>Fail
@@ -638,7 +630,7 @@ if($userRol==99){
 					</div>
 					
 					<div class="form-group">
-						<label class="col-sm-4 control-label" for="drives">Drives <small class="text-primary">(Ejes)</small></label>
+						<label class="col-sm-4 control-label" for="drives">Drives Axle <small class="text-primary">(Ejes)</small></label>
 						<div class="col-sm-5">
 							<label class="radio-inline">
 								<input type="radio" name="drives" id="drives1" value=0 <?php if($information && $information[0]["drives"] == 0) { echo "checked"; }  ?>>Fail
@@ -668,61 +660,91 @@ if($userRol==99){
 					</div>
 					
 					<div class="form-group">
-						<label class="col-sm-4 control-label" for="elevator">Elevator <small class="text-primary">(Elevador)</small></label>
+						<label class="col-sm-4 control-label" for="middleDrive">Middle drive shaft <small class="text-primary">(Cardan central)</small></label>
 						<div class="col-sm-5">
 							<label class="radio-inline">
-								<input type="radio" name="elevator" id="elevator1" value=0 <?php if($information && $information[0]["elevator"] == 0) { echo "checked"; }  ?>>Fail
+								<input type="radio" name="middleDrive" id="middleDrive1" value=0 <?php if($information && $information[0]["middle_drive"] == 0) { echo "checked"; }  ?>>Fail
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="elevator" id="elevator2" value=1 <?php if($information && $information[0]["elevator"] == 1) { echo "checked"; }  ?>>Pass
+								<input type="radio" name="middleDrive" id="middleDrive2" value=1 <?php if($information && $information[0]["middle_drive"] == 1) { echo "checked"; }  ?>>Pass
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="elevator" id="elevator3" value=99 <?php if($information && $information[0]["elevator"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-				
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="rotor">Back Main Rotor <small class="text-primary">(Rotor principal trasero)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="rotor" id="rotor1" value=0 <?php if($information && $information[0]["rotor"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="rotor" id="rotor2" value=1 <?php if($information && $information[0]["rotor"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="rotor" id="rotor3" value=99 <?php if($information && $information[0]["rotor"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-						
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="mixtureBox">Scissors Mixture Box <small class="text-primary">(Caja de la mezcla)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="mixtureBox" id="mixtureBox1" value=0 <?php if($information && $information[0]["mixture_box"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="mixtureBox" id="mixtureBox2" value=1 <?php if($information && $information[0]["mixture_box"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="mixtureBox" id="mixtureBox3" value=99 <?php if($information && $information[0]["mixture_box"] == 99) { echo "checked"; }  ?>>N/A
+								<input type="radio" name="middleDrive" id="middleDrive3" value=99 <?php if($information && $information[0]["middle_drive"] == 99) { echo "checked"; }  ?>>N/A
 							</label>
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="col-sm-4 control-label" for="lfRotor">Left and Right Rotors <small class="text-primary">(Rotores izquierdo y derecho)</small></label>
+						<label class="col-sm-4 control-label" for="backDrive">Back drive shaft <small class="text-primary">(Cardan trasero)</small></label>
 						<div class="col-sm-5">
 							<label class="radio-inline">
-								<input type="radio" name="lfRotor" id="lfRotor1" value=0 <?php if($information && $information[0]["lf_rotor"] == 0) { echo "checked"; }  ?>>Fail
+								<input type="radio" name="backDrive" id="backDrive1" value=0 <?php if($information && $information[0]["back_drive"] == 0) { echo "checked"; }  ?>>Fail
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="lfRotor" id="lfRotor2" value=1 <?php if($information && $information[0]["lf_rotor"] == 1) { echo "checked"; }  ?>>Pass
+								<input type="radio" name="backDrive" id="backDrive2" value=1 <?php if($information && $information[0]["back_drive"] == 1) { echo "checked"; }  ?>>Pass
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="lfRotor" id="lfRotor3" value=99 <?php if($information && $information[0]["lf_rotor"] == 99) { echo "checked"; }  ?>>N/A
+								<input type="radio" name="backDrive" id="backDrive3" value=99 <?php if($information && $information[0]["back_drive"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="transfer">Transfer box shaft <small class="text-primary">(Caja de transferencia)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="transfer" id="transfer1" value=0 <?php if($information && $information[0]["transfer"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="transfer" id="transfer2" value=1 <?php if($information && $information[0]["transfer"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="transfer" id="transfer3" value=99 <?php if($information && $information[0]["transfer"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+				
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="tailGate">Tail Gate <small class="text-primary">(Puerta trasera)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="tailGate" id="tailGate1" value=0 <?php if($information && $information[0]["tail_gate"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="tailGate" id="tailGate2" value=1 <?php if($information && $information[0]["tail_gate"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="tailGate" id="tailGate3" value=99 <?php if($information && $information[0]["tail_gate"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+						
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="boom">Boom (12 Greasers) Driver side <small class="text-primary">(Boom)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="boom" id="boom1" value=0 <?php if($information && $information[0]["boom"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="boom" id="boom2" value=1 <?php if($information && $information[0]["boom"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="boom" id="boom3" value=99 <?php if($information && $information[0]["boom"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="lockBar">Lock bar tail gate <small class="text-primary">(Puerta trasera)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="lockBar" id="lockBar1" value=0 <?php if($information && $information[0]["lock_bar"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="lockBar" id="lockBar2" value=1 <?php if($information && $information[0]["lock_bar"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="lockBar" id="lockBar3" value=99 <?php if($information && $information[0]["lock_bar"] == 99) { echo "checked"; }  ?>>N/A
 							</label>
 						</div>
 					</div>
@@ -732,154 +754,6 @@ if($userRol==99){
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col-lg-12">				
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<strong>SWEEPER</strong>
-				</div>
-				<div class="panel-body">
-									
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="elevatorSweeper">Elevator <small class="text-primary">(Elevador)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="elevatorSweeper" id="elevatorSweeper1" value=0 <?php if($information && $information[0]["elevator_sweeper"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="elevatorSweeper" id="elevatorSweeper2" value=1 <?php if($information && $information[0]["elevator_sweeper"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="elevatorSweeper" id="elevatorSweeper3" value=99 <?php if($information && $information[0]["elevator_sweeper"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="mixtureContainer">Mixture Container <small class="text-primary">(Contenedor de Mezcla)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="mixtureContainer" id="mixtureContainer1" value=0 <?php if($information && $information[0]["mixture_container"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="mixtureContainer" id="mixtureContainer2" value=1 <?php if($information && $information[0]["mixture_container"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="mixtureContainer" id="mixtureContainer3" value=99 <?php if($information && $information[0]["mixture_container"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="broom">Main broom <small class="text-primary">(Escoba principal)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="broom" id="broom1" value=0 <?php if($information && $information[0]["broom"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="broom" id="broom2" value=1 <?php if($information && $information[0]["broom"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="broom" id="broom3" value=99 <?php if($information && $information[0]["broom"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-										
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="rightBroom">Right broom <small class="text-primary">(Escoba derecha)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="rightBroom" id="rightBroom1" value=0 <?php if($information && $information[0]["right_broom"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="rightBroom" id="rightBroom2" value=1 <?php if($information && $information[0]["right_broom"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="rightBroom" id="rightBroom3" value=99 <?php if($information && $information[0]["right_broom"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-				
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="leftBroom">Left broom <small class="text-primary">(Escoba izquierda)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="leftBroom" id="leftBroom1" value=0 <?php if($information && $information[0]["left_broom"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="leftBroom" id="leftBroom2" value=1 <?php if($information && $information[0]["left_broom"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="leftBroom" id="leftBroom3" value=99 <?php if($information && $information[0]["left_broom"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="sprinkerls">Sprinkerls <small class="text-primary">(Rociadores)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="sprinkerls" id="sprinkerls1" value=0 <?php if($information && $information[0]["sprinkerls"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="sprinkerls" id="sprinkerls2" value=1 <?php if($information && $information[0]["sprinkerls"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="sprinkerls" id="sprinkerls3" value=99 <?php if($information && $information[0]["sprinkerls"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="waterTank">Water Tank <small class="text-primary">(Tanque de agua)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="waterTank" id="waterTank1" value=0 <?php if($information && $information[0]["water_tank"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="waterTank" id="waterTank2" value=1 <?php if($information && $information[0]["water_tank"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="waterTank" id="waterTank3" value=99 <?php if($information && $information[0]["water_tank"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="hose">Water Tank Hose <small class="text-primary">(Manguera del tanque de agua)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="hose" id="hose1" value=0 <?php if($information && $information[0]["hose"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="hose" id="hose2" value=1 <?php if($information && $information[0]["hose"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="hose" id="hose3" value=99 <?php if($information && $information[0]["hose"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-4 control-label" for="cam">Cam Viewer <small class="text-primary">(Cámara)</small></label>
-						<div class="col-sm-5">
-							<label class="radio-inline">
-								<input type="radio" name="cam" id="cam1" value=0 <?php if($information && $information[0]["cam"] == 0) { echo "checked"; }  ?>>Fail
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="cam" id="cam2" value=1 <?php if($information && $information[0]["cam"] == 1) { echo "checked"; }  ?>>Pass
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="cam" id="cam3" value=99 <?php if($information && $information[0]["cam"] == 99) { echo "checked"; }  ?>>N/A
-							</label>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="row">
 		<div class="col-lg-12">				
 			<div class="panel panel-default">
@@ -1082,7 +956,7 @@ if($userRol==99){
 					</div>
 
 					<div class="form-group">
-						<label class="col-sm-4 control-label" for="spillKit">Spill Kit <small class="text-primary">(Kit de emergencia para derrames)</small></label>
+						<label class="col-sm-4 control-label" for="spillKit">Two Spill Kit <small class="text-primary">(Kit de emergencia para derrames)</small></label>
 						<div class="col-sm-5">
 							<label class="radio-inline">
 								<input type="radio" name="spillKit" id="spillKit1" value=0 <?php if($information && $information[0]["spill_kit"] == 0) { echo "checked"; }  ?>>Fail
@@ -1092,6 +966,273 @@ if($userRol==99){
 							</label>
 							<label class="radio-inline">
 								<input type="radio" name="spillKit" id="spillKit3" value=99 <?php if($information && $information[0]["spill_kit"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">				
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>VAC SYSTEM</strong>
+				</div>
+				<div class="panel-body">
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="cartige">Inspect Main cartige left side <small class="text-primary"></small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="cartige" id="cartige1" value=0 <?php if($information && $information[0]["cartige"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="cartige" id="cartige2" value=1 <?php if($information && $information[0]["cartige"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="cartige" id="cartige3" value=99 <?php if($information && $information[0]["cartige"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="pump">Pump diesel to lubricate blower <small class="text-primary">(Bomba diesel para lubricar el soplador)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="pump" id="pump1" value=0 <?php if($information && $information[0]["pump"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pump" id="pump2" value=1 <?php if($information && $information[0]["pump"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pump" id="pump3" value=99 <?php if($information && $information[0]["pump"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="washHose">Inspect wash hose <small class="text-primary">(Manguera de lavado)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="washHose" id="washHose1" value=0 <?php if($information && $information[0]["wash_hose"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="washHose" id="washHose2" value=1 <?php if($information && $information[0]["wash_hose"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="washHose" id="washHose3" value=99 <?php if($information && $information[0]["wash_hose"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="pressureHose">Pressure hose <small class="text-primary">(Presión de la manguera)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="pressureHose" id="pressureHose1" value=0 <?php if($information && $information[0]["pressure_hose"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pressureHose" id="pressureHose2" value=1 <?php if($information && $information[0]["pressure_hose"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pressureHose" id="pressureHose3" value=99 <?php if($information && $information[0]["pressure_hose"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">				
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>OTHER</strong>
+				</div>
+				<div class="panel-body">
+														
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="steering_wheel">Steering wheel <small class="text-primary">(Volante)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="steering_wheel" id="steering_wheel1" value=0 <?php if($information && $information[0]["steering_wheel"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="steering_wheel" id="steering_wheel2" value=1 <?php if($information && $information[0]["steering_wheel"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="suspension_system">Suspension system <small class="text-primary">(Sistema de suspensión)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="suspension_system" id="suspension_system1" value=0 <?php if($information && $information[0]["suspension_system"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="suspension_system" id="suspension_system2" value=1 <?php if($information && $information[0]["suspension_system"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+						</div>
+					</div>
+										
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="air_brake">Air brake system <small class="text-primary">(Sistema de freno de aire)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="air_brake" id="air_brake1" value=0 <?php if($information && $information[0]["air_brake"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="air_brake" id="air_brake2" value=1 <?php if($information && $information[0]["air_brake"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+						</div>
+					</div>
+										
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="fuel_system">Fuel system <small class="text-primary">(Sistema de combustible)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="fuel_system" id="fuel_system1" value=0 <?php if($information && $information[0]["fuel_system"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="fuel_system" id="fuel_system2" value=1 <?php if($information && $information[0]["fuel_system"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+	</div>	
+
+	<div class="row">
+		<div class="col-lg-12">				
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>EXTRAS</strong>
+				</div>
+				<div class="panel-body">
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="pumpOil">Wash pump Oil <small class="text-primary">(Aceite de la bomba de lavado)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="pumpOil" id="pumpOil1" value=0 <?php if($information && $information[0]["pump_oil"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pumpOil" id="pumpOil2" value=1 <?php if($information && $information[0]["pump_oil"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pumpOil" id="pumpOil3" value=99 <?php if($information && $information[0]["pump_oil"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="hydraulicOil">Hydraulic oil cooler (make sure is clean of debris) <small class="text-primary">(Enfriador de aceite hidráulico)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="hydraulicOil" id="hydraulicOil1" value=0 <?php if($information && $information[0]["hydraulic_oil"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="hydraulicOil" id="hydraulicOil2" value=1 <?php if($information && $information[0]["hydraulic_oil"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="hydraulicOil" id="hydraulicOil3" value=99 <?php if($information && $information[0]["hydraulic_oil"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="gearCase">Oil level on lower gear case <small class="text-primary">(Nivel de aceite en la caja de engranajes inferior)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="gearCase" id="gearCase1" value=0 <?php if($information && $information[0]["gear_case"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="gearCase" id="gearCase2" value=1 <?php if($information && $information[0]["gear_case"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="gearCase" id="gearCase3" value=99 <?php if($information && $information[0]["gear_case"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="hydraulic">Hydraulic Levels <small class="text-primary">(Niveles Hidráulicos)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="hydraulic" id="hydraulic1" value=0 <?php if($information && $information[0]["hydraulic"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="hydraulic" id="hydraulic2" value=1 <?php if($information && $information[0]["hydraulic"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="hydraulic" id="hydraulic3" value=99 <?php if($information && $information[0]["hydraulic"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="control">Wireless Remote Control <small class="text-primary">(Control Remoto Inalámbrico)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="control" id="control1" value=0 <?php if($information && $information[0]["control"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="control" id="control2" value=1 <?php if($information && $information[0]["control"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="control" id="control3" value=99 <?php if($information && $information[0]["control"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="panel">Electrical Panel <small class="text-primary">(Panel electrico)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="panel" id="panel1" value=0 <?php if($information && $information[0]["panel"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="panel" id="panel2" value=1 <?php if($information && $information[0]["panel"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="panel" id="panel3" value=99 <?php if($information && $information[0]["panel"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="foam">Foam Container <small class="text-primary">(Contenedor de espuma)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="foam" id="foam1" value=0 <?php if($information && $information[0]["foam"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="foam" id="foam2" value=1 <?php if($information && $information[0]["foam"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="foam" id="foam3" value=99 <?php if($information && $information[0]["foam"] == 99) { echo "checked"; }  ?>>N/A
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="heater">Heater <small class="text-primary">(Calentador)</small></label>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="heater" id="heater1" value=0 <?php if($information && $information[0]["heater"] == 0) { echo "checked"; }  ?>>Fail
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="heater" id="heater2" value=1 <?php if($information && $information[0]["heater"] == 1) { echo "checked"; }  ?>>Pass
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="heater" id="heater3" value=99 <?php if($information && $information[0]["heater"] == 99) { echo "checked"; }  ?>>N/A
 							</label>
 						</div>
 					</div>
