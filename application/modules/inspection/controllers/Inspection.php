@@ -674,6 +674,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
+						$company = $parametric[1]["value"];
 
 
 						$mensaje = "<html>
@@ -687,7 +688,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -729,6 +730,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
+						$company = $parametric[1]["value"];
 
 
 						$mensaje = "<html>
@@ -742,7 +744,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -860,6 +862,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
+						$company = $parametric[1]["value"];
 
 
 						$mensaje = "<html>
@@ -873,7 +876,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -919,7 +922,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
-
+						$company = $parametric[1]["value"];
 
 						$mensaje = "<html>
 						<head>
@@ -932,7 +935,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -1053,6 +1056,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
+						$company = $parametric[1]["value"];
 
 
 						$mensaje = "<html>
@@ -1066,7 +1070,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -1158,6 +1162,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
+						$company = $parametric[1]["value"];
 
 						$mensaje = "<html>
 						<head>
@@ -1170,7 +1175,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -1221,6 +1226,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
+						$company = $parametric[1]["value"];
 
 
 						$mensaje = "<html>
@@ -1234,7 +1240,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -1268,9 +1274,7 @@ if ($fuel_system_check == 0) {
      * @author BMOTTAG
 	 */
 	public function add_watertruck_inspection($id = 'x')
-	{
-			
-			
+	{			
 			$data['information'] = FALSE;
 					
 			//si envio el id, entonces busco la informacion 
@@ -1324,9 +1328,11 @@ if ($fuel_system_check == 0) {
 				//actualizo seguimiento en la tabla de vehiculos, para mostrar mensaje
 				$this->inspection_model->saveSeguimientoWatertruck();
 				
+				//update current hours 
+				$this->inspection_model->saveCurrentHours();
+				
 				/**
-				 * si es un registro nuevo entonces guardo el historial de cambio de aceite
-				 * y verifico si hay comentarios y envio correo al administrador
+				 * verifico si hay comentarios y envio correo al administrador
 				 */
 				if($flag)
 				{					
@@ -1355,7 +1361,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
-
+						$company = $parametric[1]["value"];
 
 						$mensaje = "<html>
 						<head>
@@ -1368,7 +1374,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -1460,6 +1466,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
+						$company = $parametric[1]["value"];
 
 						$mensaje = "<html>
 						<head>
@@ -1472,7 +1479,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -1515,7 +1522,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
-
+						$company = $parametric[1]["value"];
 
 						$mensaje = "<html>
 						<head>
@@ -1528,7 +1535,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
