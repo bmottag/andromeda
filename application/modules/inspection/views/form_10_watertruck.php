@@ -6,7 +6,7 @@
  * @author BMOTTAG
  * @since  11/5/2017
  */
-$userRol = $this->session->rol;
+$userRol = $this->session->role;
 if($userRol==99){
 ?>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
