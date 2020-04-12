@@ -127,7 +127,7 @@ class Inspection extends CI_Controller {
 						$comments = $this->input->post('comments');
 						if($comments != ""){
 							//mensaje del correo
-							$emailMsn = "<p>The following inspection have comments please check the complete report in the system.</p>";
+							$emailMsn = "<p>The following vehicle has an inspection with comments, check the full report in the system.</p>";
 							$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 							$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 							$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
@@ -286,7 +286,7 @@ if ($fuel_system_check == 0) {
 						{
 							//enviar correo
 							//mensaje del correo
-							$emailMsn = "<p>The following vehicle need to chage the oil as soon as posible.</p>";
+							$emailMsn = "<p>The following vehicle should change the oil as soon as possible.</p>";
 							$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 							$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 							$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
@@ -420,7 +420,7 @@ if ($fuel_system_check == 0) {
 					$comments = $this->input->post('comments');
 					if($comments != ""){
 						//mensaje del correo
-						$emailMsn = "<p>The following inspection have comments please check the complete report in the system.</p>";
+						$emailMsn = "<p>The following vehicle has an inspection with comments, check the full report in the system.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 						$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 						$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
@@ -473,7 +473,7 @@ if ($fuel_system_check == 0) {
 					{
 						//enviar correo
 						//mensaje del correo
-						$emailMsn = "<p>The following vehicle need to chage the oil as soon as posible.</p>";
+						$emailMsn = "<p>The following vehicle should change the oil as soon as possible.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 						$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 						$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
@@ -657,7 +657,7 @@ if ($fuel_system_check == 0) {
 					$comments = $this->input->post('comments');
 					if($comments != ""){
 						//mensaje del correo
-						$emailMsn = "<p>The following inspection have comments please check the complete report in the system.</p>";
+						$emailMsn = "<p>The following vehicle has an inspection with comments, check the full report in the system.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 						$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 						$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
@@ -710,7 +710,7 @@ if ($fuel_system_check == 0) {
 						//enviar correo
 						
 						//mensaje del correo
-						$emailMsn = "<p>The following vehicle need to chage the oil as soon as posible.</p>";
+						$emailMsn = "<p>The following vehicle should change the oil as soon as possible.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 						$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 						$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
@@ -843,7 +843,7 @@ if ($fuel_system_check == 0) {
 					$comments = $this->input->post('comments');
 					if($comments != ""){
 						//mensaje del correo
-						$emailMsn = "<p>The following inspection have comments please check the complete report in the system.</p>";
+						$emailMsn = "<p>The following vehicle has an inspection with comments, check the full report in the system.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 						$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 						$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
@@ -1036,7 +1036,7 @@ if ($fuel_system_check == 0) {
 					$comments = $this->input->post('comments');
 					if($comments != ""){
 						//mensaje del correo
-						$emailMsn = "<p>The following inspection have comments please check the complete report in the system.</p>";
+						$emailMsn = "<p>The following vehicle has an inspection with comments, check the full report in the system.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 						$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 						$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
@@ -1338,7 +1338,7 @@ if ($fuel_system_check == 0) {
 					$comments = $this->input->post('comments');
 					if($comments != ""){
 						//mensaje del correo
-						$emailMsn = "<p>The following inspection have comments please check the complete report in the system.</p>";
+						$emailMsn = "<p>The following vehicle has an inspection with comments, check the full report in the system.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 						$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 						$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
@@ -1496,7 +1496,7 @@ if ($fuel_system_check == 0) {
 						//enviar correo
 						
 						//mensaje del correo
-						$emailMsn = "<p>The following vehicle need to chage the oil as soon as posible.</p>";
+						$emailMsn = "<p>The following vehicle should change the oil as soon as possible.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
 						$emailMsn .= "<br><strong>Model: </strong>" . $vehicleInfo[0]["model"];
 						$emailMsn .= "<br><strong>Unit Number: </strong>" . $vehicleInfo[0]["unit_number"];
