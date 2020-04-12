@@ -240,6 +240,31 @@ class General_model extends CI_Model {
 			return false;
 		}
 	}
+	
+	/**
+	 * Get vehicle list -> Se usa en el Login, en Inspection, en Manintenance
+	 * Param varchar $encryption -> dato que viene del QR code
+	 * Param varchar $idVehicle -> identificador del vehiculo
+	 * @since 3/3/2016
+	 */
+	public function get_vehicle_by($arrData) 
+	{		
+			$this->db->select();
+			$this->db->join('param_vehicle_type_2 T', 'T.id_type_2 = V.type_level_2', 'INNER');
+			if (array_key_exists("encryption", $arrData)) {
+				$this->db->where('V.encryption', $arrData["encryption"]);
+			}
+			if (array_key_exists("idVehicle", $arrData)) {
+				$this->db->where('V.id_vehicle', $arrData["idVehicle"]);
+			}
+			$query = $this->db->get('param_vehicle V');
+
+			if ($query->num_rows() > 0) {
+				return $query->result_array();
+			} else {
+				return false;
+			}
+	}
 
 
 }
