@@ -67,7 +67,7 @@
 				//revisar si es para adicionar o editar
 				if ($idHeavyInspection == '') {
 					//solo usuarios SUPER_ADMIN pueden ingresar la fecha de la inspeccion
-					$userRol = $this->session->rol;
+					$userRol = $this->session->role;
 					$dateIssue = $this->input->post('date');
 					$data['date_issue'] = date("Y-m-d G:i:s");
 					$hora = date("G:i:s");
@@ -183,53 +183,25 @@
 		}
 		
 		/**
-		 * Add vehicle next oil change
-		 * @since 18/1/2017
+		 * Update vechicle current hours
+		 * @since 12/4/2020
 		 */
-		public function saveVehicleNextOilChange($idVehicle, $state, $idInspection) 
-		{
-				$idUser = $this->session->userdata("id");
+		public function saveCurrentHours() 
+		{		
+				$idVehicle = $this->input->post('hddIdVehicle');
 				
 				$data = array(
-					'fk_id_vehicle' => $idVehicle,
-					'fk_id_user' => $idUser,
-					'current_hours' => $this->input->post('hours'),
-					'next_oil_change' => $this->input->post('oilChange'),
-					'state' => $state,
-					'current_hours_2' => $this->input->post('hours2'),
-					'next_oil_change_2' => $this->input->post('oilChange2'),
-					'current_hours_3' => $this->input->post('hours3'),
-					'next_oil_change_3' => $this->input->post('oilChange3'),
-					'fk_id_inspection' => $this->input->post('idInspection')
-				);	
+					'hours' => $this->input->post('hours'),
+					'hours_2' => $this->input->post('hours2'),
+					'hours_3' => $this->input->post('hours3')
+				);
 
-
-				$query = $this->db->insert('vehicle_oil_change', $data);
-				$idVehicleNextOilChange = $this->db->insert_id();
-				$fecha = date("Y-m-d G:i:s");
-
-				//actualizo fecha del registo
-				$sql = "UPDATE vehicle_oil_change SET date_issue = '$fecha' WHERE id_oil_change=$idVehicleNextOilChange";
-				$query = $this->db->query($sql);
+				$this->db->where('id_vehicle', $idVehicle);
+				$query = $this->db->update('param_vehicle', $data);
 
 				if ($query) {
-					
-					$data = array(
-						'hours' => $this->input->post('hours'),
-						'hours_2' => $this->input->post('hours2'),
-						'hours_3' => $this->input->post('hours3')
-					);
-
-					$this->db->where('id_vehicle', $idVehicle);
-					$query = $this->db->update('param_vehicle', $data);
-	
-					if ($query) {
-						return true;
-					}else{
-						//se debe borrar el registro en la tabla vehicle_oil_change
-						return false;
-					}
-				} else {
+					return true;
+				}else{
 					return false;
 				}
 		}
@@ -270,7 +242,7 @@
 				if ($idDailyInspection == '') {
 					$data['fk_id_user'] = $idUser;
 					//solo usuarios SUPER_ADMIN pueden ingresar la fecha de la inspeccion
-					$userRol = $this->session->rol;
+					$userRol = $this->session->role;
 					$dateIssue = $this->input->post('date');
 					$data['date_issue'] = date("Y-m-d G:i:s");
 					$hora = date("G:i:s");
@@ -363,7 +335,7 @@
 				if ($idDailyInspection == '') {
 					$data['fk_id_user'] = $idUser;
 					//solo usuarios SUPER_ADMIN pueden ingresar la fecha de la inspeccion
-					$userRol = $this->session->rol;
+					$userRol = $this->session->role;
 					$dateIssue = $this->input->post('date');
 					$data['date_issue'] = date("Y-m-d G:i:s");
 					$hora = date("G:i:s");
@@ -460,7 +432,7 @@
 				if ($idDailyInspection == '') {
 					$data['fk_id_user'] = $idUser;
 					//solo usuarios SUPER_ADMIN pueden ingresar la fecha de la inspeccion
-					$userRol = $this->session->rol;
+					$userRol = $this->session->role;
 					$dateIssue = $this->input->post('date');
 					$data['date_issue'] = date("Y-m-d G:i:s");
 					$hora = date("G:i:s");
@@ -543,7 +515,7 @@
 				if ($idDailyInspection == '') {
 					$data['fk_id_user'] = $idUser;
 					//solo usuarios SUPER_ADMIN pueden ingresar la fecha de la inspeccion
-					$userRol = $this->session->rol;
+					$userRol = $this->session->role;
 					$dateIssue = $this->input->post('date');
 					$data['date_issue'] = date("Y-m-d G:i:s");
 					$hora = date("G:i:s");

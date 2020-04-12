@@ -110,10 +110,12 @@ class Inspection extends CI_Controller {
 				{
 					//actualizo seguimiento en la tabla de vehiculos, para mostrar mensaje
 					$this->inspection_model->saveSeguimiento();
+					
+					//update current hours 
+					$this->inspection_model->saveCurrentHours();
 
 					/**
-					 * si es un registro nuevo entonces guardo el historial de cambio de aceite
-					 * y verifico si hay comentarios y envio correo al administrador
+					 * verifico si hay comentarios y envio correo al administrador
 					 */
 					if($flag)
 					{						
@@ -352,8 +354,6 @@ if ($fuel_system_check == 0) {
 	 */
 	public function add_heavy_inspection($id = 'x')
 	{
-			
-			
 			$data['information'] = FALSE;
 					
 			//si envio el id, entonces busco la informacion 
@@ -404,9 +404,11 @@ if ($fuel_system_check == 0) {
 
 			if ($idHeavyInspection = $this->inspection_model->saveHeavyInspection()) 
 			{
+				//update current hours 
+				$this->inspection_model->saveCurrentHours();
+				
 				/**
-				 * si es un registro nuevo entonces guardo el historial de cambio de aceite
-				 * y verifico si hay comentarios y envio correo al administrador
+				 * verifico si hay comentarios y envio correo al administrador
 				 */
 				if($flag)
 				{					
@@ -435,7 +437,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
-
+						$company = $parametric[1]["value"];
 
 						$mensaje = "<html>
 						<head>
@@ -448,7 +450,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -460,19 +462,16 @@ if ($fuel_system_check == 0) {
 						//enviar correo
 						mail($to, $subjet, $mensaje, $cabeceras);
 					}
-					
-					$state = 1;//Inspection
-					$this->inspection_model->saveVehicleNextOilChange($idVehicle, $state, $idHeavyInspection);
-					
+										
 					//verificar el kilometraje
 					//si se paso del cambio de aceite o esta cerca entonces enviar correo al administrador
 					$hours = $this->input->post('hours');
 					$oilChange = $this->input->post('oilChange');
 					$diferencia = $oilChange - $hours;
 										
-					if($diferencia <= 50){
+					if($diferencia <= 50)
+					{
 						//enviar correo
-						
 						//mensaje del correo
 						$emailMsn = "<p>The following vehicle need to chage the oil as soon as posible.</p>";
 						$emailMsn .= "<strong>Make: </strong>" . $vehicleInfo[0]["make"];
@@ -493,7 +492,7 @@ if ($fuel_system_check == 0) {
 						$parametric = $this->general_model->get_basic_search($arrParam);						
 						$user = $parametric[2]["value"];
 						$to = $parametric[0]["value"];
-
+						$company = $parametric[1]["value"];
 
 						$mensaje = "<html>
 						<head>
@@ -506,7 +505,7 @@ if ($fuel_system_check == 0) {
 							<p>$emailMsn</p>
 
 							<p>Cordially,</p>
-							<p><strong>V-CONTRACTING INC</strong></p>
+							<p><strong>$company</strong></p>
 						</body>
 						</html>";
 
@@ -562,7 +561,6 @@ if ($fuel_system_check == 0) {
 				$encoded_image = explode(",", $data_uri)[1];
 				$decoded_image = base64_decode($encoded_image);
 				file_put_contents($name, $decoded_image);
-				
 				
 				$data['linkBack'] = "inspection/add_" . $typo . "_inspection/" . $idInspection;
 				$data['titulo'] = "<i class='fa fa-life-saver fa-fw'></i>SIGNATURE";
@@ -701,9 +699,6 @@ if ($fuel_system_check == 0) {
 						//enviar correo
 						mail($to, $subjet, $mensaje, $cabeceras);
 					}
-					
-					$state = 1;//Inspection
-					$this->inspection_model->saveVehicleNextOilChange($idVehicle, $state, $idGeneratorInspection);
 					
 					//verificar el kilometraje
 					//si se paso del cambio de aceite o esta cerca entonces enviar correo al administrador
@@ -890,10 +885,7 @@ if ($fuel_system_check == 0) {
 						//enviar correo
 						mail($to, $subjet, $mensaje, $cabeceras);
 					}
-					
-					$state = 1;//Inspection
-					$this->inspection_model->saveVehicleNextOilChange($idVehicle, $state, $idSweeperInspection);
-					
+										
 					//verificar el kilometraje
 					//si se paso del cambio de aceite o esta cerca entonces enviar correo al administrador
 					$hours = $this->input->post('hours');
@@ -1191,10 +1183,7 @@ if ($fuel_system_check == 0) {
 						mail($to, $subjet, $mensaje, $cabeceras);
 					
 }
-					
-					$state = 1;//Inspection
-					$this->inspection_model->saveVehicleNextOilChange($idVehicle, $state, $idHydrovacInspection);
-					
+										
 					//verificar el kilometraje
 					//si se paso del cambio de aceite o esta cerca entonces enviar correo al administrador
 					$hours = $this->input->post('hours');
@@ -1496,10 +1485,7 @@ if ($fuel_system_check == 0) {
 						mail($to, $subjet, $mensaje, $cabeceras);
 					
 }
-					
-					$state = 1;//Inspection
-					$this->inspection_model->saveVehicleNextOilChange($idVehicle, $state, $idWatertruckInspection);
-					
+										
 					//verificar el kilometraje
 					//si se paso del cambio de aceite o esta cerca entonces enviar correo al administrador
 					$hours = $this->input->post('hours');
