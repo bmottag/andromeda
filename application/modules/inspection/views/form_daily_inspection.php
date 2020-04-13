@@ -44,12 +44,12 @@ if($userRol==99){
 		<div class="col-lg-12">
 			<div class="panel panel-success">
 				<div class="panel-heading">
-					<i class="fa fa-search"></i><strong> INSPECTION - 
+					<i class="fa fa-search"></i><strong>
 					<?php 
 						if($truck){
-							echo "DUMP & HIGHWAY TRUCKS INSPECTION - II";//#2
+							echo " DUMP & HIGHWAY TRUCKS INSPECTION - II";//#2
 						}else{
-							echo "PICKUP INSPECTION - I";//#1
+							echo " PICKUP INSPECTION - I";//#1
 						} 
 					?> 
 					</strong>

@@ -30,7 +30,7 @@ if($userRol==99){
 		<div class="col-lg-12">
 			<div class="panel panel-purpura">
 				<div class="panel-heading">
-					<i class="fa fa-search"></i> <strong>INSPECTION - WATER TRUCK INSPECTION - X</strong><!-- #10 -->
+					<i class="fa fa-search"></i> <strong> WATER TRUCK INSPECTION - X</strong><!-- #10 -->
 				</div>
 				<div class="panel-body">
 

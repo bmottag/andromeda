@@ -26,7 +26,7 @@ if($userRol==99){
 		<div class="col-lg-12">
 			<div class="panel panel-danger">
 				<div class="panel-heading">
-					<i class="fa fa-search"></i><strong> INSPECTION - EXCAVATORS INSPECTION - VI</strong><!-- FORM 6 -->
+					<i class="fa fa-search"></i><strong> EXCAVATORS INSPECTION - VI</strong><!-- FORM 6 -->
 				</div>
 				<div class="panel-body">
 
