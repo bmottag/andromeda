@@ -8,25 +8,6 @@ class Inspection extends CI_Controller {
         $this->load->model("inspection_model");
     }
 	
-	/**
-	 * Form Add Heavy Inspection
-     * @since 17/12/2016
-     * @author BMOTTAG
-	 */
-	public function index()
-	{		
-			$idVehicle = $this->session->userdata("idVehicle");
-			if (!$idVehicle || empty($idVehicle) || $idVehicle == "x" ) { 
-				show_error('ERROR!!! - You are in the wrong place.');	
-			}
-
-			//busco datos del vehiculo
-			$arrParam['idVehicle'] = $idVehicle;
-			$data['vehicleInfo'] = $this->general_model->get_vehicle_by($arrParam);//busco datos del vehiculo
-
-			$data["view"] ='form_inspection';
-			$this->load->view("layout", $data);
-	}	
 	
 	/**
 	 * Form Add daily Inspection
@@ -68,7 +49,7 @@ class Inspection extends CI_Controller {
 			);
 			$data['trailerList'] = $this->general_model->get_basic_search($arrParam);//busco lista de trailers
 
-			$data["view"] ='form_daily_inspection';
+			$data["view"] = $data['vehicleInfo'][0]['form'];
 			$this->load->view("layout", $data);
 	}
 	
