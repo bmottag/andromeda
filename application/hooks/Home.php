@@ -14,7 +14,8 @@ class Home {
 
     public function check_login() {
         $error = FALSE;
-        $arrModules = array("login", "gh_directorio", "ieredirect");
+		$flag = TRUE;
+        $arrModules = array("login", "ieredirect");
         if (!in_array($this->ci->uri->segment(1), $arrModules)) {
             if ($this->ci->uri->segment(1) == "menu") {
                 if(($this->ci->uri->segment(2) . '/' . $this->ci->uri->segment(3)) != 'menu/salir') {
@@ -22,19 +23,22 @@ class Home {
                         $error = TRUE;
                     }
                 }
-            } else if ($this->ci->uri->segment(1) == "report") {
-                $arrControllers = array($this->ci->uri->segment(1), "index", "generaHaulingPDF", "registro", "userAuth", "validaSesion");
-                if ($this->ci->uri->segment(2) != FALSE && !in_array($this->ci->uri->segment(2), $arrControllers)) {
-                    if (isset($this->ci->session) && $this->ci->session->userdata('id') == FALSE) {
-                        $error = TRUE;
-                    }
-                }
-            } else if ($this->ci->uri->segment(1) == "programming") {
+            } else if ($this->ci->uri->segment(1) == "programming") {//SI NO LLEVAN SESSION LOS DEJA PASAR, A LOS SIGUIENTES METODOS
                 $arrControllers = array($this->ci->uri->segment(1), "verificacion", "verificacion_flha", "verificacion_tool_box");
                 if ($this->ci->uri->segment(2) != FALSE && !in_array($this->ci->uri->segment(2), $arrControllers)) {
                     if (isset($this->ci->session) && $this->ci->session->userdata('id') == FALSE) {
                         $error = TRUE;
                     }
+                }
+            } else if ($this->ci->uri->segment(1) == "report") {
+                $arrControllers = array("generaWorkOrderXLS", "generaHaulingXLS", "generaPayrollXLS", "generaWorkOrderPDF", "generaPayrollPDF", "generaInsectionSpecialPDF", "generaInsectionHeavyPDF", "generaInsectionDailyPDF", "generaHaulingPDF", "generaSafetyPDF");
+                if ($this->ci->uri->segment(2) != FALSE && in_array($this->ci->uri->segment(2), $arrControllers)) {
+					$flag = FALSE;//NO SE VERIFICA SI EXISTE PERMISOS A ESTE ENLACE
+                }
+            } else if ($this->ci->uri->segment(1) == "workorders") {
+                $arrControllers = array("generaWorkOrderXLS", "generaWorkOrderPDF");
+                if ($this->ci->uri->segment(2) != FALSE && in_array($this->ci->uri->segment(2), $arrControllers)) {
+					$flag = FALSE;//NO SE VERIFICA SI EXISTE PERMISOS A ESTE ENLACE
                 }
             } else {
                 if ($this->ci->session->userdata('id') == FALSE) {
@@ -42,7 +46,7 @@ class Home {
                 }
             }
             
-            if ($error == FALSE) {
+            if ($error == FALSE && $flag) {
                 //Se consulta si la ruta actual tiene permiso o no en el sistema
                 $this->ci->load->model('general_model', 'mm');
                 $ruta_validar = '';
