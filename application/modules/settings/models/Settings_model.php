@@ -347,6 +347,29 @@
 				}
 		}
 		
+		/**
+		 * Get vehicle inspections history
+		 * @since 13/4/2020
+		 */
+		public function get_resumen_inspections($infoVehicle) 
+		{		
+				$table = $infoVehicle[0]['table_inspection'] . ' T';
+				$idTable = 'T.' . $infoVehicle[0]['id_table_inspection'];
+		
+				$this->db->select("A.*, T.comments, CONCAT(first_name, ' ', last_name) name");
+				$this->db->join('user U', 'U.id_user = A.fk_id_user', 'INNER');
+				$this->db->join("$table", "$idTable = A.fk_id_inspection", "LEFT");
+				$this->db->where('A.fk_id_vehicle', $infoVehicle[0]['id_vehicle']);
+				$this->db->order_by('id_inspection_total', 'desc');
+				$query = $this->db->get('inspection_total A');
+
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+		
 		
 	    
 	}

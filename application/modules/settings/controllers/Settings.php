@@ -668,10 +668,8 @@ class Settings extends CI_Controller {
 
 			if ($idVehicle = $this->settings_model->saveVehicle($pass)) 
 			{
-				if($flag){ //si es un registro nuevo entonces guardo el historial de cambio de aceite
-					$state = 0;//primer registro
-					$this->settings_model->saveVehicleNextOilChange($idVehicle, $state);
-					
+				if($flag)
+				{	
 					//si es un registro nuevo genero el codigo QR y subo la imagen
 					//INICIO - genero imagen con la libreria y la subo 
 					$this->load->library('ciqrcode');
@@ -833,6 +831,27 @@ class Settings extends CI_Controller {
 			
 			$data['idVehicle'] = $idVehicle;
 			$data["view"] = 'vehicle_qr_code';
+			$this->load->view("layout", $data);
+	}
+	
+	/**
+	 * List of inspections
+	 * @param int $idVehicle
+	 * @since 17/1/2017
+	 */
+	public function inspections($idVehicle)
+	{
+			if (empty($idVehicle)) {
+				show_error('ERROR!!! - You are in the wrong place.');
+			}
+						
+			//busco datos del vehiculo
+			$arrParam['idVehicle'] = $idVehicle;
+			$data['vehicleInfo'] = $this->general_model->get_vehicle_by($arrParam);
+			
+			$data['info'] = $this->settings_model->get_resumen_inspections($data['vehicleInfo']);//vehicle oil change history
+			
+			$data["view"] = 'vehicle_inspections';
 			$this->load->view("layout", $data);
 	}
 	

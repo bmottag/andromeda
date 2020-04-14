@@ -195,7 +195,7 @@ if($lista["inspection_type"] == 99 ){
 										if($lista["inspection_type"] != 99 ){
 										?>
 									
-										<a href="<?php echo base_url("settings/nextOilChange/" . $lista['id_vehicle']); ?>" class="btn btn-primary btn-xs">Inspections</a>
+										<a href="<?php echo base_url("settings/inspections/" . $lista['id_vehicle']); ?>" class="btn btn-primary btn-xs">Inspections</a>
 										<?php }?>
 										
 										
