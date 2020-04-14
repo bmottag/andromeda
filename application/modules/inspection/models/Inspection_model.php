@@ -670,7 +670,34 @@
 				} else {
 					return false;
 				}
-		}		
+		}
+		
+		/**
+		 * Add vehicle next oil change
+		 * @since 18/1/2017
+		 */
+		public function saveResumenInspections($idVehicle, $idInspection) 
+		{
+				$idUser = $this->session->userdata("id");
+				
+				$data = array(
+					'fk_id_vehicle' => $idVehicle,
+					'fk_id_inspection' => $idInspection,
+					'fk_id_user' => $idUser,
+					'current_hours' => $this->input->post('hours'),
+					'date_issue' => date("Y-m-d G:i:s"),
+					'current_hours_2' => $this->input->post('hours2'),
+					'current_hours_3' => $this->input->post('hours3')					
+				);	
+
+				$query = $this->db->insert('inspection_total', $data);
+
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 
 		
 	    

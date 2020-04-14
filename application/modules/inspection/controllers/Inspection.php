@@ -99,7 +99,10 @@ class Inspection extends CI_Controller {
 					 * verifico si hay comentarios y envio correo al administrador
 					 */
 					if($flag)
-					{						
+					{					
+						//inserto un resumen de las inspecciones para mostrar en el enlace inspecciones
+						$this->inspection_model->saveResumenInspections($idVehicle, $idDailyInspection);
+				
 						//busco datos del vehiculo
 						$arrParam['idVehicle'] = $idVehicle;
 						$vehicleInfo = $this->general_model->get_vehicle_by($arrParam);//busco datos del vehiculo
@@ -392,7 +395,11 @@ if ($fuel_system_check == 0) {
 				 * verifico si hay comentarios y envio correo al administrador
 				 */
 				if($flag)
-				{					
+				{	
+					//inserto un resumen de las inspecciones para mostrar en el enlace inspecciones
+					$this->inspection_model->saveResumenInspections($idVehicle, $idHeavyInspection);
+
+			
 					//busco datos del vehiculo
 					$arrParam['idVehicle'] = $idVehicle;
 					$vehicleInfo = $this->general_model->get_vehicle_by($arrParam);//busco datos del vehiculo
@@ -630,6 +637,9 @@ if ($fuel_system_check == 0) {
 				 */
 				if($flag)
 				{
+					//inserto un resumen de las inspecciones para mostrar en el enlace inspecciones
+					$this->inspection_model->saveResumenInspections($idVehicle, $idGeneratorInspection);
+					
 					//busco datos del vehiculo
 					$arrParam['idVehicle'] = $idVehicle;
 					$vehicleInfo = $this->general_model->get_vehicle_by($arrParam);//busco datos del vehiculo
@@ -815,7 +825,10 @@ if ($fuel_system_check == 0) {
 				 * verifico si hay comentarios y envio correo al administrador
 				 */
 				if($flag)
-				{					
+				{
+					//inserto un resumen de las inspecciones para mostrar en el enlace inspecciones
+					$this->inspection_model->saveResumenInspections($idVehicle, $idSweeperInspection);
+					
 					//busco datos del vehiculo
 					$arrParam['idVehicle'] = $idVehicle;
 					$vehicleInfo = $this->general_model->get_vehicle_by($arrParam);//busco datos del vehiculo
@@ -1009,7 +1022,10 @@ if ($fuel_system_check == 0) {
 				 * y verifico si hay comentarios y envio correo al administrador
 				 */
 				if($flag)
-				{					
+				{
+					//inserto un resumen de las inspecciones para mostrar en el enlace inspecciones
+					$this->inspection_model->saveResumenInspections($idVehicle, $idHydrovacInspection);
+					
 					//busco datos del vehiculo
 					$arrParam['idVehicle'] = $idVehicle;
 					$vehicleInfo = $this->general_model->get_vehicle_by($arrParam);//busco datos del vehiculo
@@ -1312,7 +1328,10 @@ if ($fuel_system_check == 0) {
 				 * verifico si hay comentarios y envio correo al administrador
 				 */
 				if($flag)
-				{					
+				{
+					//inserto un resumen de las inspecciones para mostrar en el enlace inspecciones
+					$this->inspection_model->saveResumenInspections($idVehicle, $idWatertruckInspection);
+					
 					//busco datos del vehiculo
 					$arrParam['idVehicle'] = $idVehicle;
 					$vehicleInfo = $this->general_model->get_vehicle_by($arrParam);//busco datos del vehiculo
