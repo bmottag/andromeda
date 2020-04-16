@@ -1560,27 +1560,133 @@ if ($fuel_system_check == 0) {
 			echo json_encode($data);
     }
 	
+	/**
+	 * Search vehicle by vin number
+     * @since 14/4/2020
+     * @author BMOTTAG
+	 */
+	public function search_vehicle()
+	{
+			$data["view"] = 'form_search_vehicle';
+			$this->load->view("layout", $data);
+	}	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * Vehicle information
+     * @since 14/4/2020
+     * @author BMOTTAG
+	 */
+    public function vehicleInfo() 
+	{
+        header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+        $vinNumber = $this->input->post('vinNumber');
+		
+		if(strlen($vinNumber) < 5){			
+			echo "<p class='text-danger'>Enter at least 5 consecutive characters of the<strong> VIN number</strong></p>";
+		}
+		else
+		{				
+			//busco info de vehiculo
+			$arrParam = array(
+				"vinNumber" => $vinNumber,
+				"vehicleState" => 1
+			);
+			$vehicleInfo = $this->general_model->get_vehicle_by($arrParam);//busco datos del vehiculo
+			
+			if($vehicleInfo)
+			{
+				echo "<strong>Make: </strong>" . $vehicleInfo[0]['make'] . "<br>";
+				echo "<strong>Model: </strong>" . $vehicleInfo[0]['model'] . "<br>";
+				echo "<strong>Description: </strong>" . $vehicleInfo[0]['description'] . "<br>";
+				echo "<strong>Unit Number: </strong>" . $vehicleInfo[0]['unit_number'] . "<br>";
+				echo "<strong>Type: </strong><br>";
+
+				switch ($vehicleInfo[0]['type_level_1']) {
+					case 1:
+						$type = 'Fleet';
+						break;
+					case 2:
+						$type = 'Rental';
+						break;
+					case 99:
+						$type = 'Other';
+						break;
+				}
+				echo $type . " - " . $vehicleInfo[0]['type_2'];
+				echo "<br>";
+						
+				$tipo = $vehicleInfo[0]['type_level_2'];
+				
+				echo "<p class='text-danger'>";
+				//si es sweeper
+				if($tipo == 15){
+					echo "<strong>Truck engine current hours:</strong><br>";
+					echo "Current: " . number_format($vehicleInfo[0]["hours"]);
+					echo "<br>Next oil change: " . number_format($vehicleInfo[0]["oil_change"]);
+					
+					echo "<br><strong>Sweeper engine current hours:</strong><br>";
+					echo "Current: " . number_format($vehicleInfo[0]["hours_2"]);
+					echo "<br>Next oil change: " . number_format($vehicleInfo[0]["oil_change_2"]);
+				//si es hydrovac
+				}elseif($tipo == 16){
+					echo "<strong>Engine hours:</strong><br>";
+					echo "Current: " . number_format($vehicleInfo[0]["hours"]);
+					echo "<br>Next oil change: " . number_format($vehicleInfo[0]["oil_change"]);
+
+					echo "<br><strong>Hydraulic pump hours:</strong><br>";
+					echo "Current: " . number_format($vehicleInfo[0]["hours_2"]);
+					echo "<br>Next oil change: " . number_format($vehicleInfo[0]["oil_change_2"]);
+					
+					echo "<br><strong>Blower hours:</strong><br>";
+					echo "Current: " . number_format($vehicleInfo[0]["hours_3"]);
+					echo "<br>Next oil change: " . number_format($vehicleInfo[0]["oil_change_3"]);
+				}else{
+					echo "<strong>Current Hours/Kilometers: </strong><br>";
+					echo "Current: " . number_format($vehicleInfo[0]["hours"]);
+					echo "<br>Next oil change: " . number_format($vehicleInfo[0]["oil_change"]);
+				}
+				echo "</p>";
+				
+				$inspectionType = $vehicleInfo[0]['inspection_type'];
+				$linkInspection = $vehicleInfo[0]['link_inspection'];
+
+				if($inspectionType == 99 || $linkInspection == "NA"){
+					echo "<div class='alert alert-danger'>";
+					echo "NO INSPECTION FORMAT";
+					echo "</div>";
+				}else{
+					echo "<a class='btn btn-info btn-block' href='" . base_url('inspection/set_vehicle/' . $vehicleInfo[0]['id_vehicle']) . "'>";
+					echo "Rental Inspection <span class='fa fa-wrench' aria-hidden='true'>";
+					echo "</a>";
+				}
+				
+			}else{				
+				echo "<p class='text-danger'>There are no records with that VIN number.</p>";
+			}
+		}
+    }
+
+	/**
+	 * Set session with vehicle ID to do inspection
+     * @since 14/4/2020
+     * @author BMOTTAG
+	 */	
+	public function set_vehicle($idVehicle)
+	{
+		//busco informacion del vehiculo
+		$arrParam['idVehicle'] = $idVehicle;
+		$data['vehicleInfo'] = $this->general_model->get_vehicle_by($arrParam);
+		
+		$sessionData = array(
+			"idVehicle" => $idVehicle,
+			"inspectionType" => $data['vehicleInfo'][0]['inspection_type'],
+			"linkInspection" => $data['vehicleInfo'][0]['link_inspection'],
+			"formInspection" => $data['vehicleInfo'][0]['form']
+		);
+								
+		$this->session->set_userdata($sessionData);
+		
+		redirect($data['vehicleInfo'][0]['link_inspection'],"location",301);		
+	}
+		
 }
