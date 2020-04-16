@@ -23,20 +23,8 @@ class Home {
                         $error = TRUE;
                     }
                 }
-            } else if ($this->ci->uri->segment(1) == "programming") {//SI NO LLEVAN SESSION LOS DEJA PASAR, A LOS SIGUIENTES METODOS
-                $arrControllers = array($this->ci->uri->segment(1), "verificacion", "verificacion_flha", "verificacion_tool_box");
-                if ($this->ci->uri->segment(2) != FALSE && !in_array($this->ci->uri->segment(2), $arrControllers)) {
-                    if (isset($this->ci->session) && $this->ci->session->userdata('id') == FALSE) {
-                        $error = TRUE;
-                    }
-                }
             } else if ($this->ci->uri->segment(1) == "report") {
-                $arrControllers = array("generaWorkOrderXLS", "generaHaulingXLS", "generaPayrollXLS", "generaWorkOrderPDF", "generaPayrollPDF", "generaInsectionSpecialPDF", "generaInsectionHeavyPDF", "generaInsectionDailyPDF", "generaHaulingPDF", "generaSafetyPDF");
-                if ($this->ci->uri->segment(2) != FALSE && in_array($this->ci->uri->segment(2), $arrControllers)) {
-					$flag = FALSE;//NO SE VERIFICA SI EXISTE PERMISOS A ESTE ENLACE
-                }
-            } else if ($this->ci->uri->segment(1) == "workorders") {
-                $arrControllers = array("generaWorkOrderXLS", "generaWorkOrderPDF");
+                $arrControllers = array("generaInsectionSpecialPDF", "generaInsectionHeavyPDF", "generaInsectionDailyPDF");
                 if ($this->ci->uri->segment(2) != FALSE && in_array($this->ci->uri->segment(2), $arrControllers)) {
 					$flag = FALSE;//NO SE VERIFICA SI EXISTE PERMISOS A ESTE ENLACE
                 }
