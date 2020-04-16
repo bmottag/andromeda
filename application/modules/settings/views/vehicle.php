@@ -71,13 +71,23 @@ $(function(){
 						</li>
 						<li <?php if($vehicleType == 99){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/vehicle/1/99"); ?>">Survey - Trailer</a>
 						</li>
+						<li <?php if($vehicleState == 2){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/vehicle/1/x/2"); ?>">Inactive Vehicles - VCI</a>
+						</li>
 					</ul>
-					<br>	
 				<?php
+					}else{
+				?>	
+					<ul class="nav nav-pills">
+						<li <?php if($vehicleState == 1){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/vehicle/2/x/1"); ?>">Active Rental Vehicles</a>
+						</li>
+						<li <?php if($vehicleState == 2){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/vehicle/2/x/2"); ?>">Inactive Rental Vehicles</a>
+						</li>
+					</ul>
+				<?php	
 					}
 				?>
 				
-
+<br>
 				<?php if(!$deshabilitar){ ?>
 					<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $companyType . '-x'; ?>">
 							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a Vehicle

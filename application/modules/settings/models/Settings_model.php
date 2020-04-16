@@ -275,7 +275,6 @@
 				$this->db->select();
 				$this->db->join('param_company C', 'C.id_company = A.fk_id_company', 'INNER');
 				$this->db->join('param_vehicle_type_2 T', 'T.id_type_2 = A.type_level_2', 'INNER');
-				$this->db->where('A.state', 1);//solo mostrar vehiclos activos
 
 				if (array_key_exists("companyType", $arrData)) {
 					$this->db->where('C.company_type', $arrData["companyType"]);
@@ -290,6 +289,9 @@
 				
 				if (array_key_exists("idVehicle", $arrData)) {
 					$this->db->where('A.id_vehicle', $arrData["idVehicle"]);
+				}
+				if (array_key_exists("vehicleState", $arrData)) {
+					$this->db->where('A.state', $arrData["vehicleState"]);
 				}
 				
 				$this->db->order_by('T.inspection_type, C.id_company, A.unit_number', 'asc');

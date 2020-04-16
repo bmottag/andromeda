@@ -36,8 +36,8 @@ if($companyType == 2){ //si es subcontractor me deja seleccionar un sucontratist
 					<label class="control-label" for="state">State : *</label>
 					<select name="state" id="state" class="form-control" required>
 						<option value=''>Select...</option>
-						<option value=1 <?php if($information[0]["state"] == 1) { echo "selected"; }  ?>>Active</option>
-						<option value=2 <?php if($information[0]["state"] == 2) { echo "selected"; }  ?>>Inactive</option>
+						<option value=1 <?php if($information && $information[0]["state"] == 1) { echo "selected"; }  ?>>Active</option>
+						<option value=2 <?php if($information && $information[0]["state"] == 2) { echo "selected"; }  ?>>Inactive</option>
 					</select>
 				</div>
 			</div>
@@ -49,7 +49,6 @@ if($companyType == 2){ //si es subcontractor me deja seleccionar un sucontratist
 ?>
 		<input type="hidden" id="company" name="company" value=1 />
 		<input type="hidden" id="type1" name="type1" value=1 /><!-- Si es VCI entonces el FLEET -->
-		<input type="hidden" id="state" name="state" value=1 /><!-- Si es VCI entonces queda activado -->
 <?php }  ?>
 
 		<div class="row">
@@ -121,18 +120,32 @@ if($companyType == 2){ //si es subcontractor me deja seleccionar un sucontratist
 			</div>
 		</div>
 		
-<?php if(!$information){ ?>		
 		<div class="row">
+<?php if(!$information){ ?>		
 			<div class="col-sm-6">		
 				<div class="form-group text-left">
 					<label class="control-label" for="oilChange">Next Oil change : *</label>
 					<input type="text" id="oilChange" name="oilChange" class="form-control" value="<?php echo $information?$information[0]["oil_change"]:""; ?>" placeholder="Hours/Kilometers" required >
 				</div>
 			</div>
-		</div>
 <?php } ?> 
 
-				
+<?php
+if($companyType == 1){ //si es VCI
+?>
+			<div class="col-sm-6">
+				<div class="form-group text-left">
+					<label class="control-label" for="state">State : *</label>
+					<select name="state" id="state" class="form-control" required>
+						<option value=''>Select...</option>
+						<option value=1 <?php if($information && $information[0]["state"] == 1) { echo "selected"; }  ?>>Active</option>
+						<option value=2 <?php if($information && $information[0]["state"] == 2) { echo "selected"; }  ?>>Inactive</option>
+					</select>
+				</div>
+			</div>			
+<?php } ?> 
+		</div>
+		
 		<div class="form-group">
 			<div class="row" align="center">
 				<div style="width:50%;" align="center">
