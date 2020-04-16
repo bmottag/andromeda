@@ -51,6 +51,8 @@
 			
 			$leftMenu = '';
 			$topMenu = '';
+			$itemsLeftMenu = FALSE;
+			$itemsTopMenu = FALSE;
 
 			$userRole = $this->session->role;
 			//Left MENU 
@@ -67,120 +69,125 @@
 			);
 			$itemsTopMenu = $this->general_model->get_role_menu($arrParam);		
 
-			foreach ($itemsLeftMenu as $item):
-						
-				if($item['menu_url'] && $item['menu_url'] != '')
-				{
-					$menuURL = base_url($item['menu_url']);
-					
-					$leftMenu .= '<li>';
-					$leftMenu .= '<a href="' . $menuURL . '"><i class="fa ' . $item['menu_icon'] . ' fa-fw"></i> ' . $item['menu_name'] . '</a>';
-					$leftMenu .= '</li>';
-					
-				}else{
-					//enlaces del menu
-					$arrParam = array(
-						"idRole" => $userRole,
-						"idMenu" => $item['fk_id_menu'],
-						"linkState" => 1,
-						"menuType" => 1
-					);
-					$links = $this->general_model->get_role_access($arrParam);		
-
-					if($links){							
-						$leftMenu .= '<li>';
-						$leftMenu .= '<a href="#">';
-						$leftMenu .= '<i class="fa ' . $item['menu_icon'] . '"></i> ' . $item['menu_name'] . ' <span class="fa arrow"></span>';
-						$leftMenu .= '</a>';
-						
-						$leftMenu .= '<ul class="nav nav-second-level">';
-						
-						foreach ($links as $list):
-							//System URL
-							if($list['link_type'] == 1){
-								$linkURL = base_url($list['link_url']);
-								
-								$leftMenu .= '<li>';
-								$leftMenu .= '<a href="' . $linkURL . '" > ' . $list['link_name'] . '</a>';
-								$leftMenu .= '</li>';
-							//Complete URL
-							}elseif($list['link_type'] == 2 || $list['link_type'] == 4 || $list['link_type'] == 5){
-								$linkURL = $list['link_url'];
-								
-								$leftMenu .= '<li>';
-								$leftMenu .= '<a href="' . $linkURL . '" target="_blank"> ' . $list['link_name'] . '</a>';
-								$leftMenu .= '</li>';
-							//Complete DIVIDER
-							}else{
-								$linkURL = base_url($list['link_url']);
-								$leftMenu .= '<li class="divider"></li>';
-							}
-						endforeach;
-						
-						$leftMenu .= '</ul>';
-						$leftMenu .= '</li>';						
-					}
-				}
-			endforeach;
-			
-			
-			foreach ($itemsTopMenu as $item):
+			if($itemsLeftMenu)
+			{
+				foreach ($itemsLeftMenu as $item):
 							
-				if($item['menu_url'] && $item['menu_url'] != '')
-				{
-					$menuURL = base_url($item['menu_url']);
-					
-					$topMenu .= '<li>';
-					$topMenu .= '<a href="' . $menuURL . '"><i class="fa ' . $item['menu_icon'] . ' fa-fw"></i> ' . $item['menu_name'] . '</a>';
-					$topMenu .= '</li>';
-					
-				}else{
-					//enlaces del menu
-					$arrParam = array(
-						"idRole" => $userRole,
-						"idMenu" => $item['fk_id_menu'],
-						"linkState" => 1,
-						"menuType" => 2
-					);
-					$links = $this->general_model->get_role_access($arrParam);		
+					if($item['menu_url'] && $item['menu_url'] != '')
+					{
+						$menuURL = base_url($item['menu_url']);
+						
+						$leftMenu .= '<li>';
+						$leftMenu .= '<a href="' . $menuURL . '"><i class="fa ' . $item['menu_icon'] . ' fa-fw"></i> ' . $item['menu_name'] . '</a>';
+						$leftMenu .= '</li>';
+						
+					}else{
+						//enlaces del menu
+						$arrParam = array(
+							"idRole" => $userRole,
+							"idMenu" => $item['fk_id_menu'],
+							"linkState" => 1,
+							"menuType" => 1
+						);
+						$links = $this->general_model->get_role_access($arrParam);		
 
-					if($links){
-						$topMenu .= '<li class=dropdown>';
-						$topMenu .= '<a class="dropdown-toggle" data-toggle="dropdown" href="#">';
-						$topMenu .= '<i class="fa ' . $item['menu_icon'] . '"></i> ' . $item['menu_name'] . ' <i class="fa fa-caret-down"></i>';
-						$topMenu .= '</a>';
-						
-						$topMenu .= '<ul class="dropdown-menu dropdown-messages">';
-						
-						foreach ($links as $list):
-							//System URL
-							if($list['link_type'] == 1){
-								$linkURL = base_url($list['link_url']);
-								
-								$topMenu .= '<li>';
-								$topMenu .= '<a href="' . $linkURL . '" ><i class="fa ' . $list['link_icon'] . ' fa-fw"></i> ' . $list['link_name'] . '</a>';
-								$topMenu .= '</li>';
-							//Complete URL
-							}elseif($list['link_type'] == 2 || $list['link_type'] == 4 || $list['link_type'] == 5){
-								$linkURL = $list['link_url'];
-								
-								$topMenu .= '<li>';
-								$topMenu .= '<a href="' . $linkURL . '" target="_blank"><i class="fa ' . $list['link_icon'] . ' fa-fw"></i> ' . $list['link_name'] . '</a>';
-								$topMenu .= '</li>';
-							//Complete DIVIDER
-							}else{
-								$linkURL = base_url($list['link_url']);
-								$topMenu .= '<li class="divider"></li>';
-							}
-						
-
-						endforeach;
-						
-						$topMenu .= '</ul>';
-						$topMenu .= '</li>';						
+						if($links){							
+							$leftMenu .= '<li>';
+							$leftMenu .= '<a href="#">';
+							$leftMenu .= '<i class="fa ' . $item['menu_icon'] . '"></i> ' . $item['menu_name'] . ' <span class="fa arrow"></span>';
+							$leftMenu .= '</a>';
+							
+							$leftMenu .= '<ul class="nav nav-second-level">';
+							
+							foreach ($links as $list):
+								//System URL
+								if($list['link_type'] == 1){
+									$linkURL = base_url($list['link_url']);
+									
+									$leftMenu .= '<li>';
+									$leftMenu .= '<a href="' . $linkURL . '" > ' . $list['link_name'] . '</a>';
+									$leftMenu .= '</li>';
+								//Complete URL
+								}elseif($list['link_type'] == 2 || $list['link_type'] == 4 || $list['link_type'] == 5){
+									$linkURL = $list['link_url'];
+									
+									$leftMenu .= '<li>';
+									$leftMenu .= '<a href="' . $linkURL . '" target="_blank"> ' . $list['link_name'] . '</a>';
+									$leftMenu .= '</li>';
+								//Complete DIVIDER
+								}else{
+									$linkURL = base_url($list['link_url']);
+									$leftMenu .= '<li class="divider"></li>';
+								}
+							endforeach;
+							
+							$leftMenu .= '</ul>';
+							$leftMenu .= '</li>';						
+						}
 					}
-				}
-			endforeach;
+				endforeach;
+			}
+			
+			if($itemsTopMenu)
+			{			
+				foreach ($itemsTopMenu as $item):
+								
+					if($item['menu_url'] && $item['menu_url'] != '')
+					{
+						$menuURL = base_url($item['menu_url']);
+						
+						$topMenu .= '<li>';
+						$topMenu .= '<a href="' . $menuURL . '"><i class="fa ' . $item['menu_icon'] . ' fa-fw"></i> ' . $item['menu_name'] . '</a>';
+						$topMenu .= '</li>';
+						
+					}else{
+						//enlaces del menu
+						$arrParam = array(
+							"idRole" => $userRole,
+							"idMenu" => $item['fk_id_menu'],
+							"linkState" => 1,
+							"menuType" => 2
+						);
+						$links = $this->general_model->get_role_access($arrParam);		
+
+						if($links){
+							$topMenu .= '<li class=dropdown>';
+							$topMenu .= '<a class="dropdown-toggle" data-toggle="dropdown" href="#">';
+							$topMenu .= '<i class="fa ' . $item['menu_icon'] . '"></i> ' . $item['menu_name'] . ' <i class="fa fa-caret-down"></i>';
+							$topMenu .= '</a>';
+							
+							$topMenu .= '<ul class="dropdown-menu dropdown-messages">';
+							
+							foreach ($links as $list):
+								//System URL
+								if($list['link_type'] == 1){
+									$linkURL = base_url($list['link_url']);
+									
+									$topMenu .= '<li>';
+									$topMenu .= '<a href="' . $linkURL . '" ><i class="fa ' . $list['link_icon'] . ' fa-fw"></i> ' . $list['link_name'] . '</a>';
+									$topMenu .= '</li>';
+								//Complete URL
+								}elseif($list['link_type'] == 2 || $list['link_type'] == 4 || $list['link_type'] == 5){
+									$linkURL = $list['link_url'];
+									
+									$topMenu .= '<li>';
+									$topMenu .= '<a href="' . $linkURL . '" target="_blank"><i class="fa ' . $list['link_icon'] . ' fa-fw"></i> ' . $list['link_name'] . '</a>';
+									$topMenu .= '</li>';
+								//Complete DIVIDER
+								}else{
+									$linkURL = base_url($list['link_url']);
+									$topMenu .= '<li class="divider"></li>';
+								}
+							
+
+							endforeach;
+							
+							$topMenu .= '</ul>';
+							$topMenu .= '</li>';						
+						}
+					}
+				endforeach;
+			}
 			
 			$data["leftMenu"] = $leftMenu;
 			$data["topMenu"] = $topMenu;
