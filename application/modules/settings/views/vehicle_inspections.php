@@ -68,6 +68,13 @@
 <a href='<?php echo base_url('report/generaInsectionSpecialPDF/x/x/x/x/watertruck/' . $lista['fk_id_inspection'] ); ?>' target="_blank"> <img src='<?php echo base_url_images('pdf.png'); ?>' ></a>
 								<?php
 										}
+										
+//boton para editar la inspeccion
+$linkInspection = $vehicleInfo[0]['link_inspection'] . "/". $lista['fk_id_inspection'];
+echo " <a class='btn btn-success btn-xs' href='" . base_url($linkInspection) . "'>
+		Edit <span class='glyphicon glyphicon-edit' aria-hidden='true'>
+</a>";
+										
 									}
 									echo "</p></td>";
 									echo "<td class='text-center'><p class='text-" . $class . "'>" . $lista['name'] . "</p></td>";
