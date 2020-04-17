@@ -272,6 +272,157 @@ class General_model extends CI_Model {
 				return false;
 			}
 	}
+	
+    /**
+     * Daily inspection list
+     * Modules: Dashboard 
+     * @since 14/1/2017
+     */
+    public function get_daily_inspection($arrData) 
+	{
+		$this->db->select("I.*, CONCAT(first_name, ' ', last_name) name, V.*");
+		$this->db->join('user U', 'U.id_user = I.fk_id_user', 'INNER');
+		$this->db->join('param_vehicle V', 'V.id_vehicle = I.fk_id_vehicle', 'INNER');
+		
+		if (array_key_exists("idEmployee", $arrData)) {
+			$this->db->where('U.id_user', $arrData["idEmployee"]);
+		}		
+		
+		$this->db->order_by('I.date_issue', 'desc');
+		$query = $this->db->get('inspection_daily I', $arrData["limit"]);
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			return false;
+		}		
+    }
+	
+    /**
+     * Heavy inspection list
+     * Modules: Dashboard 
+     * @since 14/1/2017
+     */
+    public function get_heavy_inspection($arrData) 
+	{
+		$this->db->select("I.*, CONCAT(first_name, ' ', last_name) name, V.*");
+		$this->db->join('user U', 'U.id_user = I.fk_id_user', 'INNER');
+		$this->db->join('param_vehicle V', 'V.id_vehicle = I.fk_id_vehicle', 'INNER');
+		
+		if (array_key_exists("idEmployee", $arrData)) {
+			$this->db->where('U.id_user', $arrData["idEmployee"]);
+		}
+		
+		$this->db->order_by('I.date_issue', 'desc');
+		$query = $this->db->get('inspection_heavy I', $arrData["limit"]);
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			return false;
+		}
+    }
+	
+    /**
+     * Special inspection list
+     * Modules: Dashboard 
+     * @since 8/5/2017
+     */
+    public function get_special_inspection_generator($arrData) 
+	{
+		$this->db->select("I.*, CONCAT(first_name, ' ', last_name) name, V.*");
+		$this->db->join('user U', 'U.id_user = I.fk_id_user', 'INNER');
+		$this->db->join('param_vehicle V', 'V.id_vehicle = I.fk_id_vehicle', 'INNER');
+		
+		if (array_key_exists("idEmployee", $arrData)) {
+			$this->db->where('U.id_user', $arrData["idEmployee"]);
+		}
+		
+		$this->db->order_by('I.date_issue', 'desc');
+		$query = $this->db->get('inspection_generator I', $arrData["limit"]);
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			return false;
+		}
+    }
+	
+    /**
+     * Special inspection list
+     * Modules: Dashboard 
+     * @since 8/5/2017
+     */
+    public function get_special_inspection_hydrovac($arrData) 
+	{
+		$this->db->select("I.*, CONCAT(first_name, ' ', last_name) name, V.*");
+		$this->db->join('user U', 'U.id_user = I.fk_id_user', 'INNER');
+		$this->db->join('param_vehicle V', 'V.id_vehicle = I.fk_id_vehicle', 'INNER');
+		
+		if (array_key_exists("idEmployee", $arrData)) {
+			$this->db->where('U.id_user', $arrData["idEmployee"]);
+		}
+		
+		$this->db->order_by('I.date_issue', 'desc');
+		$query = $this->db->get('inspection_hydrovac I', $arrData["limit"]);
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			return false;
+		}
+    }
+	
+    /**
+     * Special inspection list
+     * Modules: Dashboard 
+     * @since 8/5/2017
+     */
+    public function get_special_inspection_sweeper($arrData) 
+	{
+		$this->db->select("I.*, CONCAT(first_name, ' ', last_name) name, V.*");
+		$this->db->join('user U', 'U.id_user = I.fk_id_user', 'INNER');
+		$this->db->join('param_vehicle V', 'V.id_vehicle = I.fk_id_vehicle', 'INNER');
+		
+		if (array_key_exists("idEmployee", $arrData)) {
+			$this->db->where('U.id_user', $arrData["idEmployee"]);
+		}
+		
+		$this->db->order_by('I.date_issue', 'desc');
+		$query = $this->db->get('inspection_sweeper I', $arrData["limit"]);
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			return false;
+		}
+    }
+	
+    /**
+     * Special inspection list
+     * Modules: Dashboard 
+     * @since 27/6/2017
+     */
+    public function get_special_inspection_water_truck($arrData) 
+	{
+		$this->db->select("I.*, CONCAT(first_name, ' ', last_name) name, V.*");
+		$this->db->join('user U', 'U.id_user = I.fk_id_user', 'INNER');
+		$this->db->join('param_vehicle V', 'V.id_vehicle = I.fk_id_vehicle', 'INNER');
+		
+		if (array_key_exists("idEmployee", $arrData)) {
+			$this->db->where('U.id_user', $arrData["idEmployee"]);
+		}
+		
+		$this->db->order_by('I.date_issue', 'desc');
+		$query = $this->db->get('inspection_watertruck I', $arrData["limit"]);
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			return false;
+		}
+    }
+
 
 
 }
