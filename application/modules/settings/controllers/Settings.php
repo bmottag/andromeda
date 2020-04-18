@@ -202,8 +202,7 @@ class Settings extends CI_Controller {
 			$arrParam = array(
 				"table" => "param_company",
 				"order" => "id_company",
-				"column" => "company_type",
-				"id" => 2
+				"id" => "x"
 			);
 			$data['info'] = $this->general_model->get_basic_search($arrParam);
 			

@@ -104,11 +104,14 @@ if($count == 10){
 									echo "<td class='text-center'>" . $resultado . "</td>";
 									echo "<td>" . $lista['email'] . "</td>";
 									echo "<td class='text-center'>";
+									
+									if($lista['id_company'] != 1){
 						?>
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_company']; ?>" >
 										Edit <span class="glyphicon glyphicon-edit" aria-hidden="true">
 									</button>
 						<?php
+									}
 									echo "</td>";
 							endforeach;
 						?>
