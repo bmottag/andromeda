@@ -13,6 +13,22 @@
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
+	
+<?php
+	if($infoMaintenance){ 
+?>	
+            <!-- /.row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<a class="btn btn-block btn-social btn-pinterest" href="<?php echo base_url('dashboard/maintenance'); ?>">
+						<i class="fa fa-flag"></i> You have some preventive maintenance
+					</a>
+					<br>
+				</div>	
+			</div>
+<?php
+	}
+?>	
 								
 <?php
 $retornoExito = $this->session->flashdata('retornoExito');

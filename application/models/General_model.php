@@ -422,6 +422,28 @@ class General_model extends CI_Model {
 			return false;
 		}
     }
+	
+		/**
+		 * Maintenance Check list
+		 * @since 13/3/2020
+		 */
+		public function get_maintenance_check() 
+		{
+			$this->db->select('M.*, T.*, V.*, CONCAT(U.first_name, " " , U.last_name) name');
+			$this->db->join('maintenance M', 'M.id_maintenance = C.fk_id_maintenance', 'INNER');
+			$this->db->join('maintenance_type T', 'T.id_maintenance_type = M.fk_id_maintenance_type', 'INNER');
+			$this->db->join('param_vehicle V', 'V.id_vehicle = M.fk_id_vehicle', 'INNER');
+			$this->db->join('user U', 'U.id_user = M.fk_revised_by_user', 'INNER');
+						
+			$this->db->order_by('M.id_maintenance', 'desc');
+			$query = $this->db->get('maintenance_check C');
+
+			if ($query->num_rows() > 0) {
+				return $query->result_array();
+			} else {
+				return false;
+			}
+		}
 
 
 

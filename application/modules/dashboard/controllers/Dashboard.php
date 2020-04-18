@@ -25,9 +25,10 @@ class Dashboard extends CI_Controller {
 	public function admin()
 	{				
 			$data['noDailyInspection'] = $this->dashboard_model->countDailyInspection();//cuenta registros de DailyInspection
-			$data['noHeavyInspection'] = $this->dashboard_model->countHeavyInspection();//cuenta registros de HeavyInspection
-				
+			$data['noHeavyInspection'] = $this->dashboard_model->countHeavyInspection();//cuenta registros de HeavyInspection				
 			$data['noSpecialInspection'] = $this->dashboard_model->countSpecialInspection();//cuenta registros de SpecialInspection
+			
+			$data['infoMaintenance'] = $this->general_model->get_maintenance_check();
 			
 			$arrParam["limit"] = 6;//Limite de registros para la consulta
 			$data['infoWaterTruck'] = $this->general_model->get_special_inspection_water_truck($arrParam);//info de water truck

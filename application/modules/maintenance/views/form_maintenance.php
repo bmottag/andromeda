@@ -12,7 +12,7 @@
 			<div class="panel panel-purpura">
 				<div class="panel-heading">
 					<a class="btn btn-purpura btn-xs" href="<?php echo base_url().'maintenance/entrance/'. $vehicleInfo[0]["id_vehicle"]; ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a> 
-					<i class="fa fa-wrench"></i> <strong>FORM MAINTENANCE</strong>
+					<i class="fa fa-flag"></i> <strong>FORM MAINTENANCE</strong>
 				</div>
 				<div class="panel-body">
 				

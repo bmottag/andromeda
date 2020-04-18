@@ -7,7 +7,7 @@
 			<div class="panel panel-danger">
 				<div class="panel-heading">
 					<a class="btn btn-danger btn-xs" href=" <?php echo base_url($dashboardURL); ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a> 
-					<i class="fa fa-wrench"></i> <strong>PREVENTIVE MAINTENANCE LIST </strong>
+					<i class="fa fa-flag"></i> <strong>PREVENTIVE MAINTENANCE LIST </strong>
 				</div>
 				<div class="panel-body">
 									
@@ -15,9 +15,6 @@
 							<strong>Attention: </strong>
 							The following unit(s) are 100 hours or less to its next due maintenance cycle
 or a week before to the item's next renewal.
- 
-							
-
 					</div>
 
 					<br>
