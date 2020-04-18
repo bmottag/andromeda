@@ -7,7 +7,7 @@
 			<div class="panel panel-danger">
 				<div class="panel-heading">
 					<a class="btn btn-danger btn-xs" href=" <?php echo base_url($dashboardURL); ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a> 
-					<i class="fa fa-search"></i> <strong>LAST CONSTRUCTION EQUIPMENT INSPECTION RECORDS</strong>
+					<i class="fa fa-wrench"></i> <strong>LAST CONSTRUCTION EQUIPMENT INSPECTION RECORDS</strong>
 				</div>
 				<div class="panel-body">
 							

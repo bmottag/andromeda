@@ -53,7 +53,7 @@ if ($retornoError) {
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
-							<i class="fa fa-search fa-5x"></i>
+							<i class="fa fa-wrench fa-5x"></i>
 						</div>
 						<div class="col-xs-9 text-right">
 							<div class="huge"><?php echo $noDailyInspection; ?></div>
@@ -78,7 +78,7 @@ if ($retornoError) {
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
-							<i class="fa fa-search fa-5x"></i>
+							<i class="fa fa-wrench fa-5x"></i>
 						</div>
 						<div class="col-xs-9 text-right">
 							<div class="huge"><?php echo $noHeavyInspection; ?></div>
@@ -103,7 +103,7 @@ if ($retornoError) {
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
-							<i class="fa fa-search fa-5x"></i>
+							<i class="fa fa-wrench fa-5x"></i>
 						</div>
 						<div class="col-xs-9 text-right">
 							<div class="huge"><?php echo $noSpecialInspection; ?></div>
@@ -159,7 +159,7 @@ if ($retornoError) {
 		<div class="col-lg-6">
 			<div class="panel panel-purpura">
 				<div class="panel-heading">
-					<i class="fa fa-search fa-fw"></i> Last Water Truck Inspection Records
+					<i class="fa fa-wrench fa-fw"></i> Last Water Truck Inspection Records
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">	
@@ -274,7 +274,7 @@ if($lista['comments'] != ''){
 		<div class="col-lg-6">
 			<div class="panel panel-purpura">
 				<div class="panel-heading">
-					<i class="fa fa-search fa-fw"></i> Last Hydro-Vac Inspection Records
+					<i class="fa fa-wrench fa-fw"></i> Last Hydro-Vac Inspection Records
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">	
@@ -404,7 +404,7 @@ if($lista['comments'] != ''){
 		<div class="col-lg-6">
 			<div class="panel panel-purpura">
 				<div class="panel-heading">
-					<i class="fa fa-search fa-fw"></i> Last Sweeper Inspection Records
+					<i class="fa fa-wrench fa-fw"></i> Last Sweeper Inspection Records
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">	
@@ -527,7 +527,7 @@ if($lista['comments'] != ''){
 		<div class="col-lg-6">
 			<div class="panel panel-purpura">
 				<div class="panel-heading">
-					<i class="fa fa-search fa-fw"></i> Last Generators Inspection Records
+					<i class="fa fa-wrench fa-fw"></i> Last Generators Inspection Records
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">	

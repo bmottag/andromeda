@@ -7,7 +7,7 @@
 			<div class="panel panel-success">
 				<div class="panel-heading">
 					<a class="btn btn-success btn-xs" href=" <?php echo base_url($dashboardURL); ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a> 
-					<i class="fa fa-search"></i> <strong>LAST PICKUPS & TRUCKS INSPECTION RECORDS</strong>
+					<i class="fa fa-wrench"></i> <strong>LAST PICKUPS & TRUCKS INSPECTION RECORDS</strong>
 				</div>
 				<div class="panel-body">
 											
@@ -18,14 +18,14 @@
 						<div class="col-lg-12">
 							<div class="alert alert-danger">
 								<strong>Record in Red: </strong>
-								When the inspection shows a comment and an item "FAIL", please review it ASAP.
+								The inspection has comments or has some fails, please review it ASAP.
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="alert alert-warning">
 								<strong>Record in Yellow: </strong>
-								There is a "FAIL" item in the inspection.
+								The inspection has some fails.
 							</div>
 						</div>
 					</div>
