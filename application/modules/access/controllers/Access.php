@@ -161,7 +161,10 @@ class Access extends CI_Controller {
 			$data['linkList'] = FALSE;
 			$data["idPermiso"] = $this->input->post("idPermiso");	
 			
-			$arrParam = array("columnOrder" => "menu_name");
+			$arrParam = array(
+				"columnOrder" => "menu_name",
+				"menuState" => 1
+			);
 			$data['menuList'] = $this->general_model->get_menu($arrParam);
 			
 			$arrParam = array();
