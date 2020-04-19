@@ -84,7 +84,8 @@
 					'menu_url' => $this->input->post('menu_url'),
 					'menu_icon' => $this->input->post('menu_icon'),
 					'menu_order' => $this->input->post('order'),
-					'menu_type' => $this->input->post('menu_type')
+					'menu_type' => $this->input->post('menu_type'),
+					'menu_state' => $this->input->post('menu_state')
 				);
 				
 				//revisar si es para adicionar o editar
