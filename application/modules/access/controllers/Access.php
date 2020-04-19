@@ -388,8 +388,11 @@ class Access extends CI_Controller {
         header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
         $idMenu = $this->input->post('idMenu');
 				
-		//busco info tabla de stock
-		$arrParam = array("idMenu" => $idMenu);
+		//busco listado de links activos para un menu
+		$arrParam = array(
+			"idMenu" => $idMenu,
+			"linkState" => 1
+		);
 		$linkList = $this->general_model->get_links($arrParam);
 
         echo "<option value=''>Select...</option>";
