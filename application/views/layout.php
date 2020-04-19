@@ -58,14 +58,16 @@
 			//Left MENU 
 			$arrParam = array(
 				"idRole" => $userRole,
-				"menuType" => 1
+				"menuType" => 1,
+				"menuState" => 1
 			);
 			$itemsLeftMenu = $this->general_model->get_role_menu($arrParam);
 
 			//Top MENU 
 			$arrParam = array(
 				"idRole" => $userRole,
-				"menuType" => 2
+				"menuType" => 2,
+				"menuState" => 1
 			);
 			$itemsTopMenu = $this->general_model->get_role_menu($arrParam);		
 

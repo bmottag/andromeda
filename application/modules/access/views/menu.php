@@ -77,6 +77,7 @@ if ($retornoError) {
 								<th class="text-center">Menu URL</th>
 								<th class="text-center">Menu icon</th>
 								<th class="text-center">Order</th>
+								<th class="text-center">State</th>
 								<th class="text-center">Edit</th>
 							</tr>
 						</thead>
@@ -103,7 +104,19 @@ if ($retornoError) {
 									echo '<button type="button" class="btn btn-default btn-circle"><i class="fa ' . $lista['menu_icon'] . '"></i>';
 									echo "</td>";
 									echo "<td class='text-center'>" . $lista['menu_order'] . "</td>";
-
+									echo "<td class='text-center'>";
+									switch ($lista['menu_state']) {
+										case 1:
+											$valor = 'Active';
+											$clase = "text-success";
+											break;
+										case 2:
+											$valor = 'Inactive';
+											$clase = "text-danger";
+											break;
+									}
+									echo '<p class="' . $clase . '"><strong>' . $valor . '</strong></p>';
+									echo "</td>";
 									echo "<td class='text-center'>";
 						?>
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_menu']; ?>" >

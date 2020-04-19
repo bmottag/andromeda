@@ -235,6 +235,9 @@ class General_model extends CI_Model {
 		if (array_key_exists("menuType", $arrData)) {
 			$this->db->where('M.menu_type', $arrData["menuType"]);
 		}
+		if (array_key_exists("menuState", $arrData)) {
+			$this->db->where('M.menu_state', $arrData["menuState"]);
+		}
 					
 		$this->db->group_by("P.fk_id_menu"); 
 		$this->db->order_by('M.menu_order', 'asc');
