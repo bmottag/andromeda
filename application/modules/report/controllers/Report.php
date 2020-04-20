@@ -900,6 +900,8 @@ if($lista["with_trailer"] == 1){
 			// reset pointer to the last page
 			$pdf->lastPage();
 
+// Clean any content of the output buffer
+ob_end_clean();
 
 			//Close and output PDF document
 			$pdf->Output('daily_inspection.pdf', 'I');
@@ -1001,6 +1003,9 @@ if($lista["with_trailer"] == 1){
 			// reset pointer to the last page
 			$pdf->lastPage();
 
+
+// Clean any content of the output buffer
+ob_end_clean();
 
 			//Close and output PDF document
 			$pdf->Output('heavy_inspection.pdf', 'I');
@@ -1116,6 +1121,8 @@ if($lista["with_trailer"] == 1){
 			// reset pointer to the last page
 			$pdf->lastPage();
 
+// Clean any content of the output buffer
+ob_end_clean();
 
 			//Close and output PDF document
 			$pdf->Output('special_inspection.pdf', 'I');
