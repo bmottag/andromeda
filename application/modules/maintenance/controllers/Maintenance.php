@@ -122,25 +122,28 @@ class Maintenance extends CI_Controller {
 		$arrParam = array("maintenanceState" => 1);
 		$infoMaintenance = $this->maintenance_model->get_maintenance($arrParam);	
 
-		$this->maintenance_model->delete_maintenance_check();//elimino los registros de maintenance_check
-		//revisar cuales estan proximo a vencerse por kilometros o fechas
-		foreach ($infoMaintenance as $lista):
-			$diferencia = $lista["next_hours_maintenance"] - $lista["hours"];
-			
-			if($lista["fk_id_maintenance_type"] == 8 || $lista["fk_id_maintenance_type"] == 9){
-				$diferencia = $lista["next_hours_maintenance"] - $lista["hours_2"];
-			}elseif($lista["fk_id_maintenance_type"] == 10){
-				$diferencia = $lista["next_hours_maintenance"] - $lista["hours_3"];
-			}
+		if($infoMaintenance)
+		{
+			$this->maintenance_model->delete_maintenance_check();//elimino los registros de maintenance_check
+			//revisar cuales estan proximo a vencerse por kilometros o fechas
+			foreach ($infoMaintenance as $lista):
+				$diferencia = $lista["next_hours_maintenance"] - $lista["hours"];
 				
-			$nextDateMaintenance = strtotime($lista["next_date_maintenance"]);
-			
-			if(($lista["next_hours_maintenance"] != 0 && $diferencia <= 100) || ($lista["next_date_maintenance"] != "" && $nextDateMaintenance <= $filtroFecha)){
-				$this->maintenance_model->add_maintenance_check($lista["id_maintenance"]);
-			}
-		endforeach;
+				if($lista["fk_id_maintenance_type"] == 8 || $lista["fk_id_maintenance_type"] == 9){
+					$diferencia = $lista["next_hours_maintenance"] - $lista["hours_2"];
+				}elseif($lista["fk_id_maintenance_type"] == 10){
+					$diferencia = $lista["next_hours_maintenance"] - $lista["hours_3"];
+				}
+					
+				$nextDateMaintenance = strtotime($lista["next_date_maintenance"]);
+				
+				if(($lista["next_hours_maintenance"] != 0 && $diferencia <= 100) || ($lista["next_date_maintenance"] != "" && $nextDateMaintenance <= $filtroFecha)){
+					$this->maintenance_model->add_maintenance_check($lista["id_maintenance"]);
+				}
+			endforeach;
+		}
 		
-		redirect("/dashboard/maintenance","location",301);
+		return true;
 	}
 	
 	/**
