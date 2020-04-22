@@ -20,7 +20,7 @@
 				$sql = "TRUNCATE maintenance";
 				$query = $this->db->query($sql);
 				
-				$sql = "DELETE FROM inspection_total WHERE id_inspection_total > 7";
+				$sql = "DELETE FROM inspection_total WHERE id_inspection_total > 6";
 				$query = $this->db->query($sql);
 				
 				$sql = "DELETE FROM inspection_daily WHERE id_inspection_daily > 1";
