@@ -7,7 +7,6 @@ class Access extends CI_Controller {
         parent::__construct();
         $this->load->model("access_model");
 		$this->load->helper('form');
-		$this->load->library("validarsesion");
     }
 	
 	/**

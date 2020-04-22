@@ -23,14 +23,39 @@ class Home {
                         $error = TRUE;
                     }
                 }
-            } else if ($this->ci->uri->segment(1) == "report") {
-                $arrControllers = array("generaInsectionSpecialPDF", "generaInsectionHeavyPDF", "generaInsectionDailyPDF");
+            } else if ($this->ci->uri->segment(1) == "maintenance") {//SI NO LLEVAN SESSION LOS DEJA PASAR, A LOS SIGUIENTES METODOS
+                $arrControllers = array($this->ci->uri->segment(1), "maintenance_check");
+                if ($this->ci->uri->segment(2) != FALSE && !in_array($this->ci->uri->segment(2), $arrControllers)) {
+                    if (isset($this->ci->session) && $this->ci->session->userdata('id') == FALSE) {
+                        $error = TRUE;
+                    }
+                }
+				
+                if ($this->ci->uri->segment(2) != FALSE && in_array($this->ci->uri->segment(2), $arrControllers)) {
+					$flag = FALSE;//NO SE VERIFICA SI EXISTE PERMISOS A ESTE ENLACE
+                }
+            } else if ($this->ci->uri->segment(1) == "cron") {//SI NO LLEVAN SESSION LOS DEJA PASAR, A LOS SIGUIENTES METODOS
+                $arrControllers = array($this->ci->uri->segment(1), "cleanNewData");
+                if ($this->ci->uri->segment(2) != FALSE && !in_array($this->ci->uri->segment(2), $arrControllers)) {
+                    if (isset($this->ci->session) && $this->ci->session->userdata('id') == FALSE) {
+                        $error = TRUE;
+                    }
+                }
+				
                 if ($this->ci->uri->segment(2) != FALSE && in_array($this->ci->uri->segment(2), $arrControllers)) {
 					$flag = FALSE;//NO SE VERIFICA SI EXISTE PERMISOS A ESTE ENLACE
                 }
             } else {
                 if ($this->ci->session->userdata('id') == FALSE) {
                     $error = TRUE;
+                }
+            }
+			
+			//metodos que no se verifica que tengan permisos
+			if ($this->ci->uri->segment(1) == "report") {
+                $arrControllers = array("generaInsectionSpecialPDF", "generaInsectionHeavyPDF", "generaInsectionDailyPDF");
+                if ($this->ci->uri->segment(2) != FALSE && in_array($this->ci->uri->segment(2), $arrControllers)) {
+					$flag = FALSE;//NO SE VERIFICA SI EXISTE PERMISOS A ESTE ENLACE
                 }
             }
             
